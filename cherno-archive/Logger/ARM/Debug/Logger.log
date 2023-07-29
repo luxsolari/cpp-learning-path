@@ -1,6 +1,0 @@
-﻿  Entity.cpp
-  Log.cpp
-  Static.cpp
-D:\data\code\gaming-studio-practices\cherno-practices\NewProject\Logger\Static.cpp(38,2): warning C4091: 'static ': ignored on left of 'Logger' when no variable is declared
-  Generating Code...
-  Logger.vcxproj -> D:\data\code\gaming-studio-practices\cherno-practices\NewProject\ARM\Debug\Logger.exe

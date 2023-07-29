@@ -1,3 +1,0 @@
-﻿  Source.cpp
-D:\data\code\gaming-studio-practices\cherno-practices\NewProject\Copying\Source.cpp(18,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-  Copying.vcxproj -> D:\data\code\gaming-studio-practices\cherno-practices\NewProject\x64\Debug\Copying.exe
