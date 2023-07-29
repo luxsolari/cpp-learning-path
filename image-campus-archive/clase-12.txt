@@ -1,0 +1,6 @@
+- Repaso de examen parcial
+- Repaso de clase 10 y 11
+- Repaso de ejercicios de practicas pasadas
+- Introduccion a C#
+- Creacion de un proyecto de C# de consola en Visual Studio
+- Tipos de datos basicos en C#

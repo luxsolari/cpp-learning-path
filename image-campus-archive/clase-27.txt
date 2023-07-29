@@ -1,0 +1,5 @@
+- Repaso de clase 26 sobre colisiones con AABB
+- Conceptos de penetracion de colision, separacion y sentido
+- Algoritmo de deteccion y resolucion de colisiones
+- Calculo de colisiones entre entidades dinamicas y estaticas
+- Calculo de limites de mundo de juego para limitar el movimiento del jugador

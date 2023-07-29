@@ -1,0 +1,21 @@
+Clase 1 - Introduccion a la Programación de Videojuegos
+    Programación -> creacion de programas informáticos.
+                 -> traduccion de "lenguajes naturales" a "lenguajes maquina" que pueden ser entendidos por las computadoras.
+    Progama      -> serie de instrucciones que pueden ser ejecutadas por una maquina, con el fin de resolver algun problema para el usuario.
+                 -> las instrucciones del programa se conocen como "codigo fuente".
+    Programador  -> persona encargada de traducir "algoritmos" - secuencias de instrucciones originalmente concebidas en lenguaje natural - a un lenguaje de programacion especifico.
+    Algoritmo    -> secuencia de pasos finita y ordenada que garantiza la solucion de un problema dado.
+
+    Programacion Imperativa  -> instrucciones explicitas, secuencias de pasos y ordenes precisas que se dan a la computadora.
+    Programacion Declarativa -> el programador escribe el resultado esperado en ordenes, y la maquina decide las instrucciones a implementar para resolver lo solicitado. 
+
+Algunas areas de programacion de videojuegos:
+    Gameplay: las reglas de juego, las acciones de jugador y otras entidades.
+    Interfaz de usuario: Interfaces que utiliza el jugador, menues y controles.
+    Graficos: manera de renderizar y dibujar graficos por pantalla.
+    Multijugador online: Protocolos y maneras de comunicar datos entre diferentes clientes de juego conectados.
+
+Tarea:
+Instalar Visual Studio Community
+
+

@@ -1,0 +1,5 @@
+- Introduccion a libreria grafica SFML
+- Instalacion de SFML en proyecto C# usando NuGet
+- Concepto de Game Loop
+- Suscripcion y des-sucripcion a eventos
+- Concepto de delegates

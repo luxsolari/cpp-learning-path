@@ -1,0 +1,7 @@
+- Repaso de ejercicios practica 8
+- Repaso de ejercicios practica 7
+- Formateo de strings usando $"" y {} para parametros de Console.WriteLine
+- Concepto de herencia de clases
+- Sintaxis de herencia de clases
+- Modificador de acceso protected
+- Cadena de herencias

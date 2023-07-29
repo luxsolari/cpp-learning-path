@@ -1,0 +1,4 @@
+- Creacion de Viewports (camaras) usando la clase View de SFML
+- Trackeo de entidades con una view, usando las coordenadas de una entidad
+- Concepto de maquina de estados para entidades
+- Cambio de animaciones y estados segun maquina de estados

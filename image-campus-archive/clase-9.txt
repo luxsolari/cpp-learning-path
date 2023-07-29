@@ -1,0 +1,6 @@
+- Repaso de practicas 4 y 5
+- Repaso de numeros aleatorios
+- Repaso de creacion de arrays
+- Repaso de creacion de arrays dinamicos y multi-dimensionales
+- Consignas de practica 6
+- Consignas de evaluacion para rendir el 21 de mayo 2022

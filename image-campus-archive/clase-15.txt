@@ -1,0 +1,8 @@
+- Repaso de ejercicios de practica 7
+- Repaso de creacion de clases, campos y metodos
+- Metodos finalizadores (destructores)
+- Manejo de recursos y forzar finalizacion de objetos usando el metodo GC.Collect();
+- Definicion de palabra clave static
+- Campos estaticos
+- Definicion de metodos estaticos
+- Uso de metodos y campos estaticos en codigo.

@@ -1,0 +1,8 @@
+- Repaso de clase pasada
+- Creacion de render windows
+- Creacion de properties en clase con getter y setter
+- Dibujado de figura primitiva en pantalla usando CircleShape de SFML
+- Captacion de input de teclado y movimiento simple de una figura en pantalla
+- Calculo de velocidad de movimiento independientemente del frame rate
+- Normalizacion de vectores
+

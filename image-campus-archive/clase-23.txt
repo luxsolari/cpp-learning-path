@@ -1,0 +1,6 @@
+- Repaso de clase anterior
+- Repaso de normalizacion de vectores
+- Repaso de pasaje por valor y pasaje por referencia
+- palabra clave out (parametros de salida)
+- Carga de imagenes/texturas con SFML
+- Carga y dibujado de spritesheets

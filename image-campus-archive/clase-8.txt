@@ -1,0 +1,4 @@
+- Repaso practica 4
+- Concepto de punteros para crear arrays dinamicos
+- Instruccion delete para borrar cosas del heap
+- Inicializacion con instruccion new

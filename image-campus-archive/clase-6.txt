@@ -1,0 +1,2 @@
+- Repaso de funciones
+- Introduccion al debugger de Visual Studio

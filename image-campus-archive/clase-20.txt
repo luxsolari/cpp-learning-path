@@ -1,0 +1,4 @@
+- Concepto y definicion de clases abstractas
+- Metodos virtuales puros (tambien llamados metodos abstractos)
+- Diferencias entre metodos virtuales en C++ y C#
+- Ejemplo de implementacion de clases abstractas y metodos abstractos

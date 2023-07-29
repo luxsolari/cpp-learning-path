@@ -1,0 +1,2 @@
+- Repaso de codigo de clase anterior
+- Programacion de logica de salto con SFML

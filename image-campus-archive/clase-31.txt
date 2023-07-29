@@ -1,0 +1,4 @@
+- Respuestas de dudas generales para proyecto final
+- Creacion de un loop generico para manejar diferentes estados de la aplicacion
+- Creacion de una clase Button para UI
+- Creacion de eventos propios para disparar desde el codigo

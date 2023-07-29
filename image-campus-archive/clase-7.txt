@@ -1,0 +1,5 @@
+- Conceptos de aleatoriedad y numeros pseudo-aleatorios
+- Conceptos de semilla de numeros aleatorios
+- Funcion rand()
+- Funcion srand()
+- Tipos de arreglos, arrays unidimensionales, arrays multi-dimensionales

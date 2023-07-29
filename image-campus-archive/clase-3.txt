@@ -1,0 +1,12 @@
+- Repaso clase 2
+- Estructura de control switch (case, defaults)
+- Bucles
+    - while
+    - do/while
+    - for
+- Casteo de tipos
+- Incremento, decremento (++, --)
+- Operadores de asignacion (+= -= /= *=)
+
+Tarea:
+    - Practica 1 PDF en Blackboard (no entregable)

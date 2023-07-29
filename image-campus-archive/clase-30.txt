@@ -1,0 +1,4 @@
+- Creacion de interface de usuario in-game
+- Dibujado de textos y alineacion en pantalla
+- Carga de archivos de audio y reproduccion como SFX y Musica
+

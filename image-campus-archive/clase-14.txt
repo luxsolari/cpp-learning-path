@@ -1,0 +1,10 @@
+- Repaso de introduccion a Clases y Objetos
+- Concepto de variable y método
+- Creacion de una clase. Instanciación de una clase.
+- Creacion de enums
+- Uso de enums dentro de clases
+- Declaracion e inicializacion de constructores.
+- Creacion y uso de metodos
+- Concepto de encapsulamiento
+- Concepto de modificadores de acceso (private, public)
+- Tipos de metodos

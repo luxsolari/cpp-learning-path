@@ -1,0 +1,3 @@
+- Repaso de clase anterior
+- Carga de spritesheets desde archivo en SFML
+- Implementacion de metodo update de entidad animada y cambio de animaciones de sprite

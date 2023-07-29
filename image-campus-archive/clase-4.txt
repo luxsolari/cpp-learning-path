@@ -1,0 +1,6 @@
+- Repaso clase 3
+- Estructura switch
+- Tipos enumerados (enum)
+- Instruccion de bucle for
+- Tipo string
+- Introduccion a arreglos (arrays)

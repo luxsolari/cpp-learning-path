@@ -1,0 +1,5 @@
+- Repaso general de conceptos de orientacion a objetos.
+- Repaso de conceptos de campos y metodos
+- Repaso de conceptos de Herencia y Polimorfismo
+- Colores de fondo en SFML
+- Cambio de animaciones de spritesheet segun direccion

@@ -1,0 +1,19 @@
+- Repaso de bucles,
+    while()
+    do/while()
+    for()
+- Repaso de estructuras de control
+    if
+    if else
+    switch / case
+- Uso de enumeradores
+    enum
+    enum class
+- Funciones
+    -estructura de la funcion
+    -declaracion de funciones
+    -defincion de funciones
+    -convenciones de nombres para las funciones
+    -valores de retorno y parametros de funcion
+    -sobrecarga de funciones
+    -bloques de codigo, ambitos (scope) de variables

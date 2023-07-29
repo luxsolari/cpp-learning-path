@@ -1,0 +1,4 @@
+- Repaso de practica 6
+- Repaso de headers y funciones
+- Consultas de practica 6 y examen parcial 1
+- Concepto de pasaje de parametros por copia y por referencia

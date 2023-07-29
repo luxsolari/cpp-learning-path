@@ -1,0 +1,11 @@
+- Repaso de creacion de programa basico en C#
+- Dimension de datos numericos en bits y bytes
+- Captura de input con Console.Write y WriteLine
+- Conversion de datos numericos con Convert()
+- Diferencias de arrays entre C++ y C#
+- Recorrer y mostrar arrays de C#
+- Sintaxis de arrays bidimensionales en C#
+- Dimensiones de consola en C#
+- Introduccion al paradigma de Programacion Orientada a Objetos
+    - Concepto de clase
+    

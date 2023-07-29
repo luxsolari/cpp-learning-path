@@ -1,0 +1,10 @@
+Clase 2:
+    - Creacion de proyecto en visual Studio
+    - Creacion de archivos de codigo en c++
+    - Definicion de funciones
+    - Definicion de variables
+    - Operaciones basicas con variables
+    - Impresiones basicas por consola
+    - Captura basica de input con cin();
+    - Operadores relacionales basicos
+    - Control de flujo basico (if, if else, else)
