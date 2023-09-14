@@ -165,7 +165,7 @@ int main()
 			cin >> input;
 			switch (input)
 			{
-			case 'S':
+			case 'S':			// Fall-through
 			case 's':
 				system("cls");
 				break;

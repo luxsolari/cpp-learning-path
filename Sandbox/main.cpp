@@ -12,7 +12,8 @@
 											 // Instead of this, we should use a function, as it is type safe, and scoped.
 
 #define MY_MAGIC_CONSTANT = 42				 // this is a macro definition of a constant. It will be replaced by the compiler with the value 42.
-											 // Instead of this, we should use constants, as they are type safe, and scoped.
+											 // Instead of this, we should use constants, as they are type safe, and scoped. 
+const int MyMagicConstant = 42;				 // this is a constant declaration instead of a macro definition.
 
 // Here is a way of re-implementing the PRINT macro as a function:
 void print(const char* str, int length = 0) // the default length is 0. Optional parameters.
@@ -32,11 +33,40 @@ void print(const char* str, int length = 0) // the default length is 0. Optional
 
 int main()
 {
-	const char* str = "Hello World!"; // this is a constant string in C-style. 
+	const char* str = "Hello World!";		 // this is a constant string in C-style. 
 	int len = static_cast<int>(strlen(str)); // get the length of the string above.
 
-	print("Hello World!"); 
+	print("Hello World!", len); 
 	
 	return 0;
 
 }
+
+class Entity {
+	int m_X, m_Y;
+
+	const int const getPositionX() const {
+		return m_X;
+	}
+	const int const getPositionY() const {
+		return m_Y;
+	}
+public:
+
+	Entity(int m_X, int m_Y)
+		: m_X(m_X), m_Y(m_Y)
+	{
+	}
+
+	Entity() = default;
+
+	bool operator==(const Entity& other) const
+	{
+		return m_X == other.m_X && m_Y == other.m_Y;
+	}
+
+	const Entity getMyself() 
+	{
+		return *this;
+	}
+};

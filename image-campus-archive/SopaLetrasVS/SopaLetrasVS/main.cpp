@@ -31,7 +31,7 @@ int main()
 		cout << "* Comenzaras el juego con 3 VIDAS, cada palabra incorrecta (o ya encontrada) RESTA 1 vida." << endl;
 		cout << endl;
 		cout << "* El juego TERMINA al encontrar todas las palabras, o perder todas las vidas." << endl;
-		cout << "  Tambien puedes ingresar el comando /ME RINDO para terminar el juego." << endl;
+		cout << "  Tambien puedes ingresar el comando /FF para terminar el juego." << endl;
 		cout << "-> ";
 		cin.get();
 		cin.clear();
