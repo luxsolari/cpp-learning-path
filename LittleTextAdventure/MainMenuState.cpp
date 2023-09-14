@@ -24,7 +24,7 @@ void MainMenuState::ProcessInput()
 	// check if input is "exit"
 	if (input == "exit")
 	{
-		this->Finish();
+		this->Stop();
 	}
 
 }
@@ -42,5 +42,4 @@ void MainMenuState::Draw()
 void MainMenuState::Finish()
 {
 	std::cout << "Finishing Main menu state... " << std::endl;
-	this->m_isRunning = false;
 }

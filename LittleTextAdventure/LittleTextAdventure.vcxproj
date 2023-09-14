@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandDictionary.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="LoopState.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="StatesManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CommandDictionary.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LoopState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Program.cpp" />

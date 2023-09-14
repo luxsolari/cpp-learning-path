@@ -2,6 +2,8 @@
 #include <chrono>
 #include "LoopState.h"
 
+#include <iostream>
+
 LoopState::LoopState() : m_isRunning(true)
 {
 }
@@ -25,7 +27,13 @@ void LoopState::Play()
 
 void LoopState::Stop()
 {
+	if (!this->m_isRunning)
+	{
+		std::cerr << "Cannot stop a state that is not running!" << std::endl;
+		return;
+	}
 	this->m_isRunning = false;
+	this->Finish();
 }
 
 bool LoopState::IsRunning() const
