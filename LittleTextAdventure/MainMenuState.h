@@ -15,6 +15,6 @@ public:
 	virtual void Finish() override;
 
 private:
-	class CommandDictionary* commands = nullptr;
+	class InputManager* m_inputManager;
 };
 

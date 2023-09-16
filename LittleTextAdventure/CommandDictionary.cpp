@@ -1,5 +1,5 @@
-#include <istream>
 #include <fstream>
+#include <sstream>
 #include "CommandDictionary.h"
 
 CommandDictionary::CommandDictionary()
@@ -9,15 +9,27 @@ CommandDictionary::CommandDictionary()
 	file.open("commands.cfg");
 	if (file.is_open())
 	{
-		std::string command;
-		std::string description;
-		// read command key up to first space (command) and then read the rest of the line (description)
-		while (file >> command)
+		std::string readLine;
+		while (std::getline(file, readLine))
 		{
-			file.ignore(1);
-			getline(file, description);
-			this->m_commandDictionary[command] = description;
+			std::istringstream iss(readLine);
+			int value;
+			std::string name, description;
+			
+			// Read the integer 'value' and the 'name' first.
+			if (iss >> value >> name)
+			{
+				// Now, capture the entire remainder of the line as 'description'.
+				std::getline(iss >> std::ws, description);
+
+				Command command(static_cast<Command::Value>(value));
+				command.m_name = name;
+				command.m_description = description;
+
+				this->AddCommand(command);
+			}
 		}
+
 		file.close();
 	}
 	else
@@ -31,45 +43,35 @@ CommandDictionary::~CommandDictionary()
 {
 }
 
-CommandDictionary* CommandDictionary::GetInstance()
+void CommandDictionary::AddCommand(const Command& command)
 {
-	static CommandDictionary instance;
-	return &instance;
+	this->m_commandDictionary[command.m_value] = command;
+	this->m_commandNameDictionary[command.m_name] = command;
 }
 
-void CommandDictionary::AddCommand(std::string command, std::string description)
+void CommandDictionary::RemoveCommand(Command command)
 {
-	this->m_commandDictionary[command] = description;
 }
 
-void CommandDictionary::PrintCommands()
+Command CommandDictionary::FindCommand(Command::Value value)
 {
-	for (auto& command : this->m_commandDictionary)
+	return Command();
+}
+
+Command CommandDictionary::FindCommandByName(std::string& name) const
+{
+	auto it = this->m_commandNameDictionary.find(name);
+	if (it != this->m_commandNameDictionary.end())
 	{
-		std::cout << command.first << " - " << command.second << std::endl;
-	}
-}
-
-void CommandDictionary::PrintCommand(std::string command)
-{
-	if (this->m_commandDictionary.find(command) != this->m_commandDictionary.end())
-	{
-		std::cout << this->m_commandDictionary[command] << std::endl;
+		return it->second;
 	}
 	else
 	{
-		std::cout << "Command not found" << std::endl;
+		return Command(Command::Value::INVALID_COMMAND);
 	}
 }
 
-void CommandDictionary::PrintCommandDescription(std::string command)
+bool CommandDictionary::HasCommand(Command::Value value)
 {
-	if (this->m_commandDictionary.find(command) != this->m_commandDictionary.end())
-	{
-		std::cout << this->m_commandDictionary[command] << std::endl;
-	}
-	else
-	{
-		std::cout << "Command not found" << std::endl;
-	}
+	return false;
 }

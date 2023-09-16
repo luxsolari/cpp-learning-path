@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
-#include "MainMenuState.h"
 #include "CommandDictionary.h"
+#include "InputManager.h"
+#include "MainMenuState.h"
 
-MainMenuState::MainMenuState() : commands(CommandDictionary::GetInstance())
+MainMenuState::MainMenuState() : m_inputManager(InputManager::GetInstance())
 {
 }
 
@@ -25,13 +26,7 @@ void MainMenuState::ProcessInput()
 
 	// show inputted command to screen with a message
 	std::cout << "You entered: " << input << std::endl;
-
-
-	// check if input is "exit"
-	if (input == "exit")
-	{
-		this->Stop();
-	}
+	std::cin.get();
 
 }
 
@@ -45,9 +40,7 @@ void MainMenuState::Draw()
 	std::cout << "Main menu state drawing to screen..." << std::endl;
 
 	// clear screen
-	system("cls");
-
-	this->commands->PrintCommands();
+	
 }
 
 void MainMenuState::Finish()

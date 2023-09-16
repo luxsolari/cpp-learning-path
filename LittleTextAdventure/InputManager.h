@@ -10,12 +10,12 @@ public:
 
 	// singleton
 	static InputManager* GetInstance();
-	
+
+	CommandDictionary& GetCommands();
 	void HandleInput();
 	void Update();
-	void Reset();
 
 private:
-	CommandDictionary* commands;
+	CommandDictionary& commands;
 
 };

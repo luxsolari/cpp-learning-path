@@ -23,6 +23,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LoopState.h" />
     <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="OptionsMenuState.h" />
     <ClInclude Include="StatesManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +31,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LoopState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="OptionsMenuState.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="StatesManager.cpp" />
   </ItemGroup>
