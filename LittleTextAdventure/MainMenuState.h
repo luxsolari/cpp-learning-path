@@ -14,5 +14,7 @@ public:
 	virtual void Draw() override;
 	virtual void Finish() override;
 
+private:
+	class CommandDictionary* commands = nullptr;
 };
 

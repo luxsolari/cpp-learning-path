@@ -33,6 +33,9 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="StatesManager.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="commands.cfg" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

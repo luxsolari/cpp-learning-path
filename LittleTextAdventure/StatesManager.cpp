@@ -19,7 +19,7 @@ StatesManager* StatesManager::GetInstance()
 
 void StatesManager::AddState(LoopState* state)
 {
-	this->m_states.push_back(state);
+	this->m_states.emplace_back(state);
 }
 
 void StatesManager::RemoveState(LoopState* state)
