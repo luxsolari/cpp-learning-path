@@ -4,7 +4,7 @@ class LoopState
 {
 public:
 	LoopState();
-	~LoopState();
+	virtual ~LoopState();
 
 	virtual void Start() = 0;
 	virtual void ProcessInput() = 0;

@@ -47,37 +47,65 @@ CommandDictionary::~CommandDictionary()
 {
 }
 
+CommandDictionary* CommandDictionary::GetInstance()
+{
+	static CommandDictionary instance;
+	return &instance;
+}
+
 void CommandDictionary::AddCommand(const Command& command)
 {
 	this->m_commandDictionary[command.m_value] = command;
-	this->m_commandNameDictionary[command.m_name] = command;
+	this->m_commandNameDictionary[command.m_name] = command.m_value;
 }
 
-void CommandDictionary::RemoveCommand(Command command)
+void CommandDictionary::RemoveCommand(const Command& command)
 {
 	this->m_commandDictionary.erase(command.m_value);
 	this->m_commandNameDictionary.erase(command.m_name);
 }
 
-Command CommandDictionary::FindCommand(Command::Value value)
+bool CommandDictionary::TriggerCommand(Command::Value command)
 {
-	return Command();
+	const auto it = this->m_commandDictionary.find(command);
+	if (it != this->m_commandDictionary.end())
+	{
+		it->second.m_triggered = true;
+		return true;
+	}
+	return false;
 }
 
-Command CommandDictionary::FindCommandByName(const std::string& name) const
+bool CommandDictionary::UntriggerCommand(Command::Value command)
 {
-	auto it = this->m_commandNameDictionary.find(name);
+	const auto it = this->m_commandDictionary.find(command);
+	if (it != this->m_commandDictionary.end())
+	{
+		it->second.m_triggered = false;
+		return true;
+	}
+	return false;
+}
+
+Command& CommandDictionary::FindCommand(Command::Value value)
+{
+	return this->m_commandDictionary[value];
+}
+
+Command& CommandDictionary::FindCommandByName(const std::string& name)
+{
+	const auto it = this->m_commandNameDictionary.find(name);
 	if (it != this->m_commandNameDictionary.end())
 	{
-		return it->second;
+		return this->m_commandDictionary.at(it->second);
 	}
 	else
 	{
-		return Command(Command::Value::INVALID_COMMAND);
+		return this->m_commandDictionary.at(Command::Value::INVALID_COMMAND);
 	}
 }
 
-bool CommandDictionary::HasCommand(Command::Value value)
+bool CommandDictionary::HasCommand(const Command::Value value) const
 {
-	return false;
+	return this->m_commandDictionary.find(value) != this->m_commandDictionary.end();
 }

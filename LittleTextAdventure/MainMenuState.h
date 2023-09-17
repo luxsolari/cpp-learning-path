@@ -6,7 +6,7 @@ class MainMenuState :
 {
 public:
 	MainMenuState();
-	~MainMenuState();
+	virtual ~MainMenuState() override;
 
 	virtual void Start() override;
 	virtual void ProcessInput() override;

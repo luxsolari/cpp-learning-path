@@ -8,9 +8,7 @@ LoopState::LoopState() : m_isRunning(true)
 {
 }
 
-LoopState::~LoopState()
-{
-}
+LoopState::~LoopState() = default;
 
 void LoopState::Play()
 {

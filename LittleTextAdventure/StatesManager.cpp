@@ -29,7 +29,12 @@ void StatesManager::RemoveState(LoopState* state)
 
 void StatesManager::ChangeState(LoopState* state)
 {
+	// set current state as not running
+	this->m_currentState->Stop();
+	// set new state as current state
 	this->m_currentState = state;
+	// add new state to the front of the stack
+	this->m_states.push_front(state);
 }
 
 LoopState* StatesManager::GetCurrentState()
