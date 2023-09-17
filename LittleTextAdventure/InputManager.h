@@ -11,7 +11,7 @@ public:
 	// singleton
 	static InputManager* GetInstance();
 
-	CommandDictionary& GetCommands();
+	CommandDictionary* GetCommands();
 	void HandleInput();
 	void Update();
 

@@ -1,7 +1,7 @@
 ﻿#include "InputManager.h"
 #include "CommandDictionary.h"
 
-InputManager::InputManager() : commands(CommandDictionary::GetInstance())
+InputManager::InputManager() : commands(*CommandDictionary::GetInstance())
 {
 }
 
@@ -15,22 +15,26 @@ InputManager* InputManager::GetInstance()
 	return &instance;
 }
 
-CommandDictionary& InputManager::GetCommands()
+CommandDictionary* InputManager::GetCommands()
 {
 	return this->commands.GetInstance();
 }
 
 void InputManager::HandleInput()
 {
+	// TODO: implement this function
 	// check command against dictionary
-	// if command is found, execute command
-	// if command is not found, print error message
+	// if command is found, mark as "triggered"
+	// if command is not found, mark INVALID_COMMAND as "triggered"
 
 }
 
 void InputManager::Update()
 {
-	std::string input;
-	std::cout << "Enter a command: ";
-	std::cin >> input;
+	// TODO:
+	// Check for "triggered" commands
+	// If found, execute, unmark "triggered" from executed command afterwards
+	// If INVALID_COMMAND is "triggered", print error message, unmark "triggered" from INVALID_COMMAND afterwards
+	// If no commands are "triggered", do nothing.
+
 }

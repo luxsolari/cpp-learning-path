@@ -12,21 +12,25 @@ CommandDictionary::CommandDictionary()
 		std::string readLine;
 		while (std::getline(file, readLine))
 		{
-			std::istringstream iss(readLine);
-			int value;
-			std::string name, description;
-			
-			// Read the integer 'value' and the 'name' first.
-			if (iss >> value >> name)
+			// ignore lines that begin with #
+			if (readLine[0] != '#')
 			{
-				// Now, capture the entire remainder of the line as 'description'.
-				std::getline(iss >> std::ws, description);
+				std::istringstream iss(readLine);
+				int value;
+				std::string name, description;
 
-				Command command(static_cast<Command::Value>(value));
-				command.m_name = name;
-				command.m_description = description;
+				// Read the integer 'value' and the 'name' first.
+				if (iss >> value >> name)
+				{
+					// Now, capture the entire remainder of the line as 'description'.
+					std::getline(iss >> std::ws, description);
 
-				this->AddCommand(command);
+					Command command(static_cast<Command::Value>(value));
+					command.m_name = name;
+					command.m_description = description;
+
+					this->AddCommand(command);
+				}
 			}
 		}
 
@@ -51,6 +55,8 @@ void CommandDictionary::AddCommand(const Command& command)
 
 void CommandDictionary::RemoveCommand(Command command)
 {
+	this->m_commandDictionary.erase(command.m_value);
+	this->m_commandNameDictionary.erase(command.m_name);
 }
 
 Command CommandDictionary::FindCommand(Command::Value value)
@@ -58,7 +64,7 @@ Command CommandDictionary::FindCommand(Command::Value value)
 	return Command();
 }
 
-Command CommandDictionary::FindCommandByName(std::string& name) const
+Command CommandDictionary::FindCommandByName(const std::string& name) const
 {
 	auto it = this->m_commandNameDictionary.find(name);
 	if (it != this->m_commandNameDictionary.end())
