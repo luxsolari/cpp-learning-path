@@ -56,7 +56,7 @@ CommandDictionary* CommandDictionary::GetInstance()
 void CommandDictionary::AddCommand(const Command& command)
 {
 	this->m_commandDictionary[command.m_value] = command;
-	this->m_commandNameDictionary[command.m_name] = command.m_value;
+	this->m_commandNameDictionary[command.m_name] = command;
 }
 
 void CommandDictionary::RemoveCommand(const Command& command)
@@ -92,7 +92,7 @@ Command& CommandDictionary::FindCommand(Command::Value value)
 	return this->m_commandDictionary[value];
 }
 
-Command& CommandDictionary::FindCommandByName(const std::string& name)
+Command::Value CommandDictionary::FindCommandByName(const std::string& name)
 {
 	const auto it = this->m_commandNameDictionary.find(name);
 	if (it != this->m_commandNameDictionary.end())
@@ -101,7 +101,7 @@ Command& CommandDictionary::FindCommandByName(const std::string& name)
 	}
 	else
 	{
-		return this->m_commandDictionary.at(Command::Value::INVALID_COMMAND);
+		return Command::Value::INVALID_COMMAND;
 	}
 }
 

@@ -61,16 +61,16 @@ public:
 	bool TriggerCommand(Command::Value command);
 	bool UntriggerCommand(Command::Value command);
 	Command& FindCommand(Command::Value value);
-	Command& FindCommandByName(const std::string& name);
+	Command::Value FindCommandByName(const std::string& name);
 	bool HasCommand(Command::Value value) const;
 
 	// getter, return a reference to the dictionary, not a copy
 	std::unordered_map<Command::Value, Command>& GetCommandDictionary() { return m_commandDictionary; }
-	std::unordered_map<std::string, Command::Value>& GetCommandNameDictionary() { return m_commandNameDictionary; }
+	std::unordered_map<std::string, Command>& GetCommandNameDictionary() { return m_commandNameDictionary; }
 
 private:
 	std::unordered_map<Command::Value, Command> m_commandDictionary;
-	std::unordered_map<std::string, Command::Value> m_commandNameDictionary; // reverse mapping
+	std::unordered_map<std::string, Command> m_commandNameDictionary; // reverse mapping
 };
 
 #endif // COMMAND_DICTIONARY

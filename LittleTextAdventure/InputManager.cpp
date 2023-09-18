@@ -22,7 +22,7 @@ CommandDictionary* InputManager::GetCommands() const
 
 void InputManager::HandleInput(const std::string& input)
 {
-	this->commands->TriggerCommand(this->commands->FindCommandByName(input).m_value);
+	this->commands->TriggerCommand(this->commands->FindCommandByName(input));
 }
 
 void InputManager::Update()
