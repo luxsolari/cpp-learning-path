@@ -1,13 +1,8 @@
 ﻿#include "InputManager.h"
 #include "CommandDictionary.h"
 
-InputManager::InputManager() : commands(CommandDictionary::GetInstance())
-{
-}
-
-InputManager::~InputManager()
-{
-}
+InputManager::InputManager() : commands(CommandDictionary::GetInstance()){}
+InputManager::~InputManager() = default;
 
 InputManager* InputManager::GetInstance()
 {
@@ -20,21 +15,21 @@ CommandDictionary* InputManager::GetCommands() const
 	return this->commands;
 }
 
-void InputManager::HandleInput(const std::string& input)
+void InputManager::HandleInput(const std::string& input) const
 {
-	this->commands->TriggerCommand(this->commands->FindCommandByName(input).m_value);
+	this->commands->TriggerCommand(this->commands->FindCommandByName(input, Command::Type::MAIN_MENU).m_command_code);
 }
 
-void InputManager::Update()
+void InputManager::Update() const
 {
 	// Check for "triggered" commands
 	// If found, unmark "triggered" from executed command afterwards
 	// If INVALID_COMMAND is "triggered", print error message, unmark "triggered" from INVALID_COMMAND afterwards
 	// If no commands are "triggered", do nothing.
-	if (this->commands->FindCommand(Command::INVALID_COMMAND).m_triggered)
+	if (this->commands->FindCommand(Command::Code::INVALID_COMMAND).m_triggered)
 	{
 		std::cout << "Invalid command!" << std::endl;
-		this->commands->UntriggerCommand(Command::INVALID_COMMAND);
+		this->commands->UntriggerCommand(Command::Code::INVALID_COMMAND);
 	}
 	else
 	{
@@ -44,7 +39,7 @@ void InputManager::Update()
 			{
 				std::cout << "Command triggered: " << it->second.m_name << std::endl;
 				it->second.m_triggered = false;
-				this->commands->UntriggerCommand(it->second.m_value);
+				this->commands->UntriggerCommand(it->second.m_command_code);
 			}
 		}
 	}

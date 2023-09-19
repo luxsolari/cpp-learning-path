@@ -2,6 +2,9 @@
 #include <sstream>
 #include "CommandDictionary.h"
 
+#include <algorithm>
+#include <map>
+
 CommandDictionary::CommandDictionary()
 {
 	// read commands from file
@@ -16,16 +19,19 @@ CommandDictionary::CommandDictionary()
 			if (readLine[0] != '#')
 			{
 				std::istringstream iss(readLine);
-				int value;
+				int code = 0;
+				int type = 0;
 				std::string name, description;
 
 				// Read the integer 'value' and the 'name' first.
-				if (iss >> value >> name)
+				if (iss >> code >> type >> name)
 				{
 					// Now, capture the entire remainder of the line as 'description'.
 					std::getline(iss >> std::ws, description);
 
-					Command command(static_cast<Command::Value>(value));
+					Command command;
+					command.m_command_code = static_cast<Command::Code>(code);
+					command.m_command_type = static_cast<Command::Type>(type);
 					command.m_name = name;
 					command.m_description = description;
 
@@ -55,17 +61,15 @@ CommandDictionary* CommandDictionary::GetInstance()
 
 void CommandDictionary::AddCommand(const Command& command)
 {
-	this->m_commandDictionary[command.m_value] = command;
-	this->m_commandNameDictionary[command.m_name] = command.m_value;
+	this->m_commandDictionary[command.m_command_code] = command;
 }
 
 void CommandDictionary::RemoveCommand(const Command& command)
 {
-	this->m_commandDictionary.erase(command.m_value);
-	this->m_commandNameDictionary.erase(command.m_name);
+	this->m_commandDictionary.erase(command.m_command_code);
 }
 
-bool CommandDictionary::TriggerCommand(Command::Value command)
+bool CommandDictionary::TriggerCommand(Command::Code command)
 {
 	const auto it = this->m_commandDictionary.find(command);
 	if (it != this->m_commandDictionary.end())
@@ -76,7 +80,7 @@ bool CommandDictionary::TriggerCommand(Command::Value command)
 	return false;
 }
 
-bool CommandDictionary::UntriggerCommand(Command::Value command)
+bool CommandDictionary::UntriggerCommand(Command::Code command)
 {
 	const auto it = this->m_commandDictionary.find(command);
 	if (it != this->m_commandDictionary.end())
@@ -87,25 +91,32 @@ bool CommandDictionary::UntriggerCommand(Command::Value command)
 	return false;
 }
 
-Command& CommandDictionary::FindCommand(Command::Value value)
+Command& CommandDictionary::FindCommand(Command::Code value)
 {
 	return this->m_commandDictionary[value];
 }
 
-Command& CommandDictionary::FindCommandByName(const std::string& name)
+Command& CommandDictionary::FindCommandByName(const std::string& name, const Command::Type type)
 {
-	const auto it = this->m_commandNameDictionary.find(name);
-	if (it != this->m_commandNameDictionary.end())
+
+	// filter dictionary by type with a lambda expression and search for name
+	auto it = std::find_if(this->m_commandDictionary.begin(), this->m_commandDictionary.end(),
+	[name, type](const std::pair<Command::Code, Command>& command)
 	{
-		return this->m_commandDictionary.at(it->second);
-	}
-	else
+		// if name and type match, return true. If general command, return true
+		return command.second.m_name == name && (command.second.m_command_type == type || command.second.m_command_type == Command::Type::GENERAL);
+	});
+
+	// if found return the command
+	if (it != this->m_commandDictionary.end())
 	{
-		return this->m_commandDictionary.at(Command::Value::INVALID_COMMAND);
+		return it->second;
 	}
+	// else return the invalid command
+	return this->m_commandDictionary[Command::Code::INVALID_COMMAND];
 }
 
-bool CommandDictionary::HasCommand(const Command::Value value) const
+bool CommandDictionary::HasCommand(const Command::Code value) const
 {
 	return this->m_commandDictionary.find(value) != this->m_commandDictionary.end();
 }

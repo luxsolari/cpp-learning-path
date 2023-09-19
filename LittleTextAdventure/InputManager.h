@@ -13,8 +13,8 @@ public:
 	static InputManager* GetInstance();
 
 	CommandDictionary* GetCommands() const;
-	void HandleInput(const std::string& input);
-	void Update();
+	void HandleInput(const std::string& input) const;
+	void Update() const;
 
 private:
 	CommandDictionary* commands;

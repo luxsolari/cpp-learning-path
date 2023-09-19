@@ -8,7 +8,7 @@
 class Command
 {
 public:
-	enum Value : int
+	enum class Code : int
 	{
 		UNINITIALIZED = -999,
 		NOT_FOUND = -2,
@@ -25,24 +25,64 @@ public:
 		CONTROLS_MENU_EXIT = 6,
 	};
 
+	enum class Type
+	{
+		UNINITIALIZED = -999,
+		ERROR = -1,
+		GENERAL = 0,
+		MAIN_MENU = 1,
+		OPTIONS_MENU = 2,
+		CONTROLS_MENU = 3
+	};
+
 	// constructors
-	Command() : m_value(Value::INVALID_COMMAND) {}
-	Command(const Value value) : m_value(value) {}
-	Command(std::string name) : m_value(Command::Value::UNINITIALIZED), m_name(std::move(name)), m_description("/_uninit") {}
+	Command() : m_command_code(Code::INVALID_COMMAND) {}
+	Command(const Code value) : m_command_code(value) {}
+	Command(std::string name) : m_command_code(Command::Code::UNINITIALIZED), m_name(std::move(name)), m_description("/_uninit") {}
 
 	// conversion operators
-	constexpr operator Value() const { return m_value; }
+	constexpr operator Code() const { return m_command_code; }
 	explicit operator bool() const = delete;
 
 	// comparison operators
-	bool operator==(const Command& a) const { return m_value == a.m_value; }
-	bool operator!=(const Command& a) const { return m_value != a.m_value; }
-	bool operator<(const Command& a)  const { return m_value < a.m_value; }
-	bool operator>(const Command& a)  const { return m_value > a.m_value; }
-	bool operator<=(const Command& a) const { return m_value <= a.m_value; }
-	bool operator>=(const Command& a) const { return m_value >= a.m_value; }
+	bool operator==(const Command& a) const { return m_command_code == a.m_command_code; }
+	bool operator!=(const Command& a) const { return m_command_code != a.m_command_code; }
+	bool operator<(const Command& a)  const { return m_command_code < a.m_command_code; }
+	bool operator>(const Command& a)  const { return m_command_code > a.m_command_code; }
+	bool operator<=(const Command& a) const { return m_command_code <= a.m_command_code; }
+	bool operator>=(const Command& a) const { return m_command_code >= a.m_command_code; }
 
-	Value m_value;
+	// stream operators
+	friend std::ostream& operator<<(std::ostream& os, const Command::Code command)
+	{
+		os << static_cast<int>(command);
+		return os;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Command::Type type)
+	{
+		os << static_cast<int>(type);
+		return os;
+	}
+
+	friend std::istream& operator>>(std::istream& is, Command::Code command)
+	{
+		int value;
+		is >> value;
+		command = static_cast<Command::Code>(value);
+		return is;
+	}
+
+	friend std::istream& operator>>(std::istream& is, Command::Type type)
+	{
+		int value;
+		is >> value;
+		type = static_cast<Command::Type>(value);
+		return is;
+	}
+	
+	Code m_command_code = Code::UNINITIALIZED;
+	Type m_command_type = Type::UNINITIALIZED;
 	std::string m_name;
 	std::string m_description;
 	bool m_triggered = false;
@@ -58,19 +98,17 @@ public:
 
 	void AddCommand(const Command& command);
 	void RemoveCommand(const Command& command);
-	bool TriggerCommand(Command::Value command);
-	bool UntriggerCommand(Command::Value command);
-	Command& FindCommand(Command::Value value);
-	Command& FindCommandByName(const std::string& name);
-	bool HasCommand(Command::Value value) const;
+	bool TriggerCommand(Command::Code command);
+	bool UntriggerCommand(Command::Code command);
+	Command& FindCommand(Command::Code value);
+	Command& FindCommandByName(const std::string& name, const Command::Type type);
+	bool HasCommand(Command::Code value) const;
 
 	// getter, return a reference to the dictionary, not a copy
-	std::unordered_map<Command::Value, Command>& GetCommandDictionary() { return m_commandDictionary; }
-	std::unordered_map<std::string, Command::Value>& GetCommandNameDictionary() { return m_commandNameDictionary; }
+	std::unordered_map<Command::Code, Command>& GetCommandDictionary() { return m_commandDictionary; }
 
 private:
-	std::unordered_map<Command::Value, Command> m_commandDictionary;
-	std::unordered_map<std::string, Command::Value> m_commandNameDictionary; // reverse mapping
+	std::unordered_map<Command::Code, Command> m_commandDictionary;
 };
 
 #endif // COMMAND_DICTIONARY
