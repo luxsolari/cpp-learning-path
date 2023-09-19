@@ -102,6 +102,7 @@ public:
 	bool UntriggerCommand(Command::Code command);
 	Command& FindCommand(Command::Code value);
 	Command& FindCommandByName(const std::string& name, const Command::Type type);
+	Command& FindCommandByStatus(bool triggered);
 	bool HasCommand(Command::Code value) const;
 
 	// getter, return a reference to the dictionary, not a copy

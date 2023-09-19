@@ -104,7 +104,8 @@ Command& CommandDictionary::FindCommandByName(const std::string& name, const Com
 	[name, type](const std::pair<Command::Code, Command>& command)
 	{
 		// if name and type match, return true. If general command, return true
-		return command.second.m_name == name && (command.second.m_command_type == type || command.second.m_command_type == Command::Type::GENERAL);
+		return command.second.m_name == name && 
+			(command.second.m_command_type == type || command.second.m_command_type == Command::Type::GENERAL);
 	});
 
 	// if found return the command
@@ -114,6 +115,20 @@ Command& CommandDictionary::FindCommandByName(const std::string& name, const Com
 	}
 	// else return the invalid command
 	return this->m_commandDictionary[Command::Code::INVALID_COMMAND];
+}
+
+Command& CommandDictionary::FindCommandByStatus(bool triggered)
+{
+	// filter dictionary by type with a lambda expression and search for name
+	auto it = std::find_if(this->m_commandDictionary.begin(), this->m_commandDictionary.end(),
+	[](const std::pair<Command::Code, Command>& command)
+	{
+		// if name and type match, return true. If general command, return true
+		return command.second.m_triggered == true;
+	});
+
+	if (it != this->m_commandDictionary.end()) return it->second;
+	return this->m_commandDictionary[Command::Code::NOT_FOUND];
 }
 
 bool CommandDictionary::HasCommand(const Command::Code value) const

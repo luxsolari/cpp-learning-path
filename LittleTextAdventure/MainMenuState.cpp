@@ -1,11 +1,10 @@
 #include <iostream>
 #include <string>
-#include "InputManager.h"
-#include "MainMenuState.h"
-
 #include <chrono>
 #include <thread>
-
+#include "InputManager.h"
+#include "MainMenuState.h"
+#include "OptionsMenuState.h"
 #include "CommandDictionary.h"
 #include "StatesManager.h"
 
@@ -38,10 +37,21 @@ void MainMenuState::ProcessInput()
 void MainMenuState::Update()
 {
 	std::cout << "Main menu state update..." << std::endl;
-	if (InputManager::GetInstance()->GetCommands()->FindCommand(Command::Code::MAIN_MENU_EXIT).m_triggered)
+
+	auto command = InputManager::GetInstance()->GetCommands()->FindCommandByStatus(true);
+
+	switch (command)
 	{
+	case Command::Code::MAIN_MENU_OPTIONS:
+		StatesManager::GetInstance()->ChangeState(new OptionsMenuState());
+		break;
+	case Command::Code::MAIN_MENU_EXIT:
 		this->Stop();
+		break;
+	default:
+		break;
 	}
+
 	InputManager::GetInstance()->Update();
 }
 
