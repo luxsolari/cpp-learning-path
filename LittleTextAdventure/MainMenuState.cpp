@@ -37,10 +37,9 @@ void MainMenuState::ProcessInput()
 void MainMenuState::Update()
 {
 	std::cout << "Main menu state update..." << std::endl;
+	this->m_triggeredCommand = &(InputManager::GetInstance()->GetCommands()->FindCommandByStatus(true));
 
-	auto command = InputManager::GetInstance()->GetCommands()->FindCommandByStatus(true);
-
-	switch (command)
+	switch (this->m_triggeredCommand->m_command_code)
 	{
 	case Command::Code::MAIN_MENU_OPTIONS:
 		StatesManager::GetInstance()->ChangeState(new OptionsMenuState());
@@ -51,14 +50,26 @@ void MainMenuState::Update()
 	default:
 		break;
 	}
-
 	InputManager::GetInstance()->Update();
 }
 
 void MainMenuState::Draw()
 {
 	std::cout << "Main menu state drawing to screen..." << std::endl;
-	// sleep for 1 second
+
+	switch (this->m_triggeredCommand->m_command_code)
+	{
+	case Command::Code::MAIN_MENU_OPTIONS:
+		std::cout << "Transitioning to options menu..." << std::endl;
+		break;
+	case Command::Code::MAIN_MENU_EXIT:
+		std::cout << "Exiting game..." << std::endl;
+		break;
+	default:
+		break;
+	}
+
+	// draw "loading dots"
 	std::this_thread::sleep_for(std::chrono::milliseconds(750));
 	std::cout << ".";
 	std::this_thread::sleep_for(std::chrono::milliseconds(750));
