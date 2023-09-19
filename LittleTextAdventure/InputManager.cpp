@@ -28,7 +28,6 @@ void InputManager::Update() const
 	// If no commands are "triggered", do nothing.
 	if (this->commands->FindCommand(Command::Code::INVALID_COMMAND).m_triggered)
 	{
-		std::cout << "Invalid command!" << std::endl;
 		this->commands->UntriggerCommand(Command::Code::INVALID_COMMAND);
 	}
 	else
@@ -37,7 +36,6 @@ void InputManager::Update() const
 		{
 			if (it->second.m_triggered)
 			{
-				std::cout << "Command triggered: " << it->second.m_name << std::endl;
 				it->second.m_triggered = false;
 				this->commands->UntriggerCommand(it->second.m_command_code);
 			}

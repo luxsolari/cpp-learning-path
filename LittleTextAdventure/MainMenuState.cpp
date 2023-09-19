@@ -27,10 +27,6 @@ void MainMenuState::ProcessInput()
 	// get input command using getline
 	std::string input;
 	getline(std::cin, input);
-
-	// show inputted command to screen with a message
-	std::cout << "You entered: " << input << std::endl;
-
 	InputManager::GetInstance()->HandleInput(input);
 }
 
@@ -64,6 +60,9 @@ void MainMenuState::Draw()
 		break;
 	case Command::Code::MAIN_MENU_EXIT:
 		std::cout << "Exiting game..." << std::endl;
+		break;
+	case Command::Code::INVALID_COMMAND:
+		std::cout << "Invalid Command!" << std::endl;
 		break;
 	default:
 		break;
