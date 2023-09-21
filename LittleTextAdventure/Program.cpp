@@ -1,8 +1,4 @@
-#include <thread>
-#include <chrono>
-#include <string>
 #include <iostream>
-#include "CommandDictionary.h"
 #include "StatesManager.h"
 
 int main ()

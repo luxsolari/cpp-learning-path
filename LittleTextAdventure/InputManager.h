@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <string>
 
+#include "CommandDictionary.h"
+
 class CommandDictionary;
 
 class InputManager
@@ -13,7 +15,7 @@ public:
 	static InputManager* GetInstance();
 
 	CommandDictionary* GetCommands() const;
-	void HandleInput(const std::string& input) const;
+	void HandleInput(const std::string& input, const Command::Type type) const;
 	void Update() const;
 
 private:

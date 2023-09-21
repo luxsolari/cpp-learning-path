@@ -14,6 +14,7 @@ public:
 	virtual void Finish() override;
 
 private:
+	class Command* m_triggeredCommand = nullptr;
 	class InputManager* m_inputManager;
 
 };

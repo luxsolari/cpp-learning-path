@@ -15,9 +15,9 @@ CommandDictionary* InputManager::GetCommands() const
 	return this->commands;
 }
 
-void InputManager::HandleInput(const std::string& input) const
+void InputManager::HandleInput(const std::string& input, const Command::Type type ) const
 {
-	this->commands->TriggerCommand(this->commands->FindCommandByName(input, Command::Type::MAIN_MENU).m_command_code);
+	this->commands->TriggerCommand(this->commands->FindCommandByName(input, type).m_command_code);
 }
 
 void InputManager::Update() const

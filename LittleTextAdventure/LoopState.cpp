@@ -1,7 +1,6 @@
 #include <thread>
 #include <chrono>
 #include "LoopState.h"
-
 #include <iostream>
 
 LoopState::LoopState() : m_isRunning(true)
@@ -13,7 +12,6 @@ LoopState::~LoopState() = default;
 void LoopState::Play()
 {
 	this->Start();
-
 	while (this->IsRunning())
 	{
 		this->ProcessInput();
@@ -29,6 +27,7 @@ void LoopState::Stop()
 		std::cerr << "Cannot stop a state that is not running!" << std::endl;
 		return;
 	}
+	this->m_currentStatus = Status::PAUSED;
 	this->m_isRunning = false;
 	this->Finish();
 }
@@ -36,4 +35,9 @@ void LoopState::Stop()
 bool LoopState::IsRunning() const
 {
 	return this->m_isRunning;
+}
+
+Status LoopState::GetCurrentStatus() const
+{
+	return this->m_currentStatus;
 }

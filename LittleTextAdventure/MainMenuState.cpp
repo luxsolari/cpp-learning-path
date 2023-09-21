@@ -18,23 +18,35 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::Start()
 {
-	std::cout << "Starting Main Menu state..." << std::endl;
+	if (this->m_currentStatus == Status::NOT_STARTED)
+	{
+		std::cout << "Starting Main Menu state..." << std::endl;
+		this->m_currentStatus = Status::RUNNING;
+		this->m_isRunning = true;
+	}
+	else if (this->m_currentStatus == Status::PAUSED)
+	{
+		std::cout << "Resuming Main Menu state..." << std::endl;
+		this->m_currentStatus = Status::RUNNING;
+		this->m_isRunning = true;
+	}
 }
 
 void MainMenuState::ProcessInput()
 {
 	std::cout << "Main menu state process input..." << std::endl;
-	// get input command using getline
+	///e get input command using getline
 	std::string input;
 	getline(std::cin, input);
-	InputManager::GetInstance()->HandleInput(input);
+	InputManager::GetInstance()->HandleInput(input, Command::Type::MAIN_MENU);
 }
 
 void MainMenuState::Update()
 {
 	std::cout << "Main menu state update..." << std::endl;
 	this->m_triggeredCommand = &(InputManager::GetInstance()->GetCommands()->FindCommandByStatus(true));
-
+	InputManager::GetInstance()->Update();
+	
 	switch (this->m_triggeredCommand->m_command_code)
 	{
 	case Command::Code::MAIN_MENU_OPTIONS:
@@ -46,7 +58,6 @@ void MainMenuState::Update()
 	default:
 		break;
 	}
-	InputManager::GetInstance()->Update();
 }
 
 void MainMenuState::Draw()

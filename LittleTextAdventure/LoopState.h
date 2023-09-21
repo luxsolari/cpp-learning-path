@@ -1,4 +1,5 @@
 #pragma once
+#include "Status.h"
 
 class LoopState
 {
@@ -17,8 +18,11 @@ public:
 
 protected:
 	bool m_isRunning;
-
+	Status m_currentStatus = Status::NOT_STARTED;
 public:
 	bool IsRunning() const;
+	void SetIsRunning(bool isRunning);
+	
+	Status GetCurrentStatus() const;
 };
 

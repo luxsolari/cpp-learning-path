@@ -33,6 +33,7 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="OptionsMenuState.h" />
     <ClInclude Include="StatesManager.h" />
+    <ClInclude Include="Status.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CommandDictionary.cpp" />
