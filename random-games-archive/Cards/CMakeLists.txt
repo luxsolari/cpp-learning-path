@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(Cards)
+project(Cards CXX ASM)
 
 # Define ANSI escape codes for text color
 if(CMAKE_HOST_WIN32)
@@ -33,23 +33,38 @@ add_executable(Cards ${SOURCE_FILES})
 
 # Set the output path for the assembly listing
 set(OUTPUT_PATH ${CMAKE_BINARY_DIR}/assembly_output)
-set(ASSEMBLY_LISTING_FILE main.asm)
+set(ASSEMBLY_LISTING_FILE ${OUTPUT_PATH}/main.asm)
+
+# Ensure that the directory for the assembly listing map file exists
+file(MAKE_DIRECTORY ${OUTPUT_PATH})
+
+# Print compiler information
 message("${ANSI_RED}Compiler is: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} ${CMAKE_CXX_COMPILER_VERSION}${ANSI_RESET}")
+
 # Enable assembly output for MSVC
 if(MSVC)
     message("MSVC-specific configurations...")
+    # Set the output path for the assembly listing
     set_target_properties(Cards PROPERTIES
             COMPILE_OPTIONS "/FAs"        # Generate assembly listing
             VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")  # Set working directory for debugging
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
-elseif (CMAKE_COMPILER_IS_GNUCXX)
-    message("GCC-specific configurations...")
-    # Evil black magic for GCC compilers (usually *nixes)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    # Clang-specific configurations
-    message("Clang-specific configurations...")
+
+elseif (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    message("GCC or Clang-specific configurations...")
+
+    SET(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp")
+    # Set the output path for the assembly listing
+    set_target_properties(Cards PROPERTIES
+            COMPILE_OPTIONS "-Wa,-adhln=${ASSEMBLY_LISTING_FILE}"        # Generate assembly listing
+            LINK_FLAGS "-Wl,-Map=${OUTPUT_PATH}/main.map")               # Generate a map file
+
+    # Pass a preprocessor macro to the compiler
+    target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
+
 else()
     # Other compiler configurations
     message("Other compiler configurations...")
+
 endif()

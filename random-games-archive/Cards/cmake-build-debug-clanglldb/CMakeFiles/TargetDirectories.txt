@@ -1,3 +1,0 @@
-/Users/luxsolari/Code/cpp-learning-path/random-games-archive/Cards/cmake-build-debug-clanglldb/CMakeFiles/Cards.dir
-/Users/luxsolari/Code/cpp-learning-path/random-games-archive/Cards/cmake-build-debug-clanglldb/CMakeFiles/edit_cache.dir
-/Users/luxsolari/Code/cpp-learning-path/random-games-archive/Cards/cmake-build-debug-clanglldb/CMakeFiles/rebuild_cache.dir
