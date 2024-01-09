@@ -1,18 +1,15 @@
 #include <iostream>
-
 #include <string>
-#include <io.h>
 #include <fcntl.h>
+#ifdef _WIN32
+#include <io.h>
 #include <Windows.h>
 
 #define SPADE L"\u2660"
 #define CLUB L"\u2663"
 #define HEART L"\u2665"
 #define DIAMOND L"\u2666"
-
 enum SUIT { spade = 1, club, heart, diamond };
-
-using namespace std;
 
 // color setter
 inline void SetColor(WORD color) {
@@ -49,34 +46,77 @@ void printSuit(int suitToSelect) {
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	switch (suitToSelect) {
 	case spade:
-		wcout << SPADE;
+		std::wcout << SPADE;
 		break;
 	case club:
-		wcout << CLUB;
+		std::wcout << CLUB;
 		break;
 	case heart:
-		wcout << red << HEART << white;
+		std::wcout << red << HEART << white;
 		break;
 	case diamond:
-		wcout << red << DIAMOND << white;
+		std::wcout << red << DIAMOND << white;
 		break;
 	default:
-		wcout << "Invalid suit." << endl;
+		std::wcout << "Invalid suit." << std::endl;
 		break;
 	}
 	_setmode(_fileno(stdout), _O_TEXT);
 }
+#else
+// Define card suits symbols glyphs for *nix
+#define SPADE "♠︎"
+#define CLUB "♣︎"
+#define HEART "♥︎"
+#define DIAMOND "♦︎"
+// Define color codes for *nix
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define BLUE "\033[34m"
+#define WHITE "\033[37m"
+
+// Define card suits enum
+enum SUIT { spade = 1, club, heart, diamond };
+
+void printSuit(int suitToSelect) {
+	switch (suitToSelect) {
+	case spade:
+		std::cout << SPADE;
+		break;
+	case club:
+		std::cout << CLUB;
+		break;
+	case heart:
+		std::cout << HEART;
+		break;
+	case diamond:
+		std::cout << DIAMOND;
+		break;
+	default:
+		std::cout << "Invalid suit." << std::endl;
+		break;
+	}
+}
+
+
+#endif
 
 
 int main()
 {
-#ifdef YOUR_MACRO
-	cout << YOUR_MACRO << endl;
-#endif
-	cout << "Spades: ";   printSuit(spade); cout << "\n";
-	cout << "Hearts: ";   printSuit(heart); cout << "\n";
-	cout << "Clubs: ";    printSuit(club); cout << "\n";
-	cout << "Diamonds: "; printSuit(diamond); 
-	cout << "\n";
+#ifdef _WIN32
+	std::cout << "Spades: ";   printSuit(spade); std::cout << "\n";
+	std::cout << "Hearts: ";   printSuit(heart); std::cout << "\n";
+	std::cout << "Clubs: ";    printSuit(club); std::cout << "\n";
+	std::cout << "Diamonds: "; printSuit(diamond);
+	std::cout << "\n";
 	system("pause");
+#else
+	// Display card suits symbols glyphs
+	std::cout << "Spades: " << "♠︎" << std::endl;
+	std::cout << "Hearts: " << "♥︎" << std::endl;
+	std::cout << "Clubs: " << "♣︎" << std::endl;
+	std::cout << "Diamonds: " << "♦︎" << std::endl;
+#endif
+
 }

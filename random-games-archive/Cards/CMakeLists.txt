@@ -14,14 +14,15 @@ if(CMAKE_HOST_WIN32)
     set(ANSI_WHITE "")
 else()
     # On non-Windows systems, use ANSI escape codes
-    set(ANSI_RESET "\033[0m")
-    set(ANSI_RED "\033[1;31m")
-    set(ANSI_GREEN "\033[1;32m")
-    set(ANSI_YELLOW "\033[1;33m")
-    set(ANSI_BLUE "\033[1;34m")
-    set(ANSI_MAGENTA "\033[1;35m")
-    set(ANSI_CYAN "\033[1;36m")
-    set(ANSI_WHITE "\033[1;37m")
+    string(ASCII 27 Esc)
+    set(ANSI_RESET "${Esc}[0m")
+    set(ANSI_RED "${Esc}[1;31m")       # Red
+    set(ANSI_GREEN "${Esc}[1;32m")     # Green
+    set(ANSI_YELLOW "${Esc}[1;33m")    # Yellow
+    set(ANSI_BLUE "${Esc}[1;34m")      # Blue
+    set(ANSI_MAGENTA "${Esc}[1;35m")   # Magenta
+    set(ANSI_CYAN "${Esc}[1;36m")      # Cyan
+    set(ANSI_WHITE "${Esc}[1;37m")     # White
 endif()
 
 # Add your source files
@@ -33,7 +34,7 @@ add_executable(Cards ${SOURCE_FILES})
 # Set the output path for the assembly listing
 set(OUTPUT_PATH ${CMAKE_BINARY_DIR}/assembly_output)
 set(ASSEMBLY_LISTING_FILE main.asm)
-message("${ANSI_RED}Compiler is: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+message("${ANSI_RED}Compiler is: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} ${CMAKE_CXX_COMPILER_VERSION}${ANSI_RESET}")
 # Enable assembly output for MSVC
 if(MSVC)
     message("MSVC-specific configurations...")

@@ -1,0 +1,15 @@
+"/Users/luxsolari/Applications/CLion Nova.app/Contents/bin/cmake/mac/aarch64/bin/cmake" -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" -S /Users/luxsolari/Code/cpp-learning-path/random-games-archive/Cards -B /Users/luxsolari/Code/cpp-learning-path/random-games-archive/Cards/cmake-build-release-clanglldb
+CMake Deprecation Warning:
+  Support for "Extra Generators" like
+
+    CodeBlocks
+
+  is deprecated and will be removed from a future version of CMake.  IDEs may
+  use the cmake-file-api(7) to view CMake-generated project build trees.
+
+
+Compiler is: AppleClang  15.0.0.15000100
+Clang-specific configurations...
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/luxsolari/Code/cpp-learning-path/random-games-archive/Cards/cmake-build-release-clanglldb
