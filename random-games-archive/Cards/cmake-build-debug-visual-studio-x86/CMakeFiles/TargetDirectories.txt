@@ -1,0 +1,3 @@
+D:/data/code/cpp-learning-path/Cards/cmake-build-debug-visual-studio-x86/CMakeFiles/Cards.dir
+D:/data/code/cpp-learning-path/Cards/cmake-build-debug-visual-studio-x86/CMakeFiles/edit_cache.dir
+D:/data/code/cpp-learning-path/Cards/cmake-build-debug-visual-studio-x86/CMakeFiles/rebuild_cache.dir

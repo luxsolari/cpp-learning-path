@@ -1,0 +1,4 @@
+# ninja log v5
+1	70	7264790218897866	build.ninja	73df28ff08718494
+0	641	7264789444733106	CMakeFiles/Cards.dir/main.cpp.obj	90e47bbb274805aa
+642	722	7264789445480415	Cards.exe	3b1dd8c11bff2cf8
