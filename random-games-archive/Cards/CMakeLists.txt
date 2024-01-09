@@ -26,7 +26,11 @@ else()
 endif()
 
 # Add your source files
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES src/Program.cpp
+        src/GameWin.cpp
+        src/GameWin.h
+        src/GameUnix.cpp
+        src/GameUnix.h)
 
 # Define your target
 add_executable(Cards ${SOURCE_FILES})

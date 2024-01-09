@@ -4,6 +4,7 @@
 #ifdef _WIN32
 #include <io.h>
 #include <Windows.h>
+#include "GameWin.h"
 
 #define SPADE L"\u2660"
 #define CLUB L"\u2663"
@@ -106,6 +107,9 @@ int main()
 	std::cout << "Clubs: ";    printSuit(club); std::cout << "\n";
 	std::cout << "Diamonds: "; printSuit(diamond);
 	std::cout << "\n";
+
+    GameWin::getInstance()->printName();
+
 	system("pause");
 #else
 	// Display card suits symbols glyphs
