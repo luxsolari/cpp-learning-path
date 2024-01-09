@@ -97,11 +97,7 @@ void printSuit(int suitToSelect) {
 		break;
 	}
 }
-
-
 #endif
-
-
 int main()
 {
 #ifdef _WIN32
@@ -113,10 +109,10 @@ int main()
 	system("pause");
 #else
 	// Display card suits symbols glyphs
-	std::cout << "Spades: " << "♠︎" << std::endl;
-	std::cout << "Hearts: " << "♥︎" << std::endl;
-	std::cout << "Clubs: " << "♣︎" << std::endl;
-	std::cout << "Diamonds: " << "♦︎" << std::endl;
+	std::cout << "Spades: " << SPADE << std::endl;
+	std::cout << "Hearts: " << HEART << std::endl;
+	std::cout << "Clubs: " << CLUB << std::endl;
+	std::cout << "Diamonds: " << DIAMOND << std::endl;
 #endif
 
 }
