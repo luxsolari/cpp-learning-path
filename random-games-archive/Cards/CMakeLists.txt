@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(Cards CXX ASM)
 
+# Set the C++ standard to use
+set(CMAKE_CXX_STANDARD 11)
+
 # Define ANSI escape codes for text color
 if(CMAKE_HOST_WIN32)
     # On Windows, use the WinAPI for console color
@@ -56,7 +59,7 @@ if(MSVC)
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
 
-elseif (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+elseif (CMAKE_COMPILER_IS_GNUCXX)
     message("GCC or Clang-specific configurations...")
 
     SET(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp")
@@ -68,6 +71,17 @@ elseif (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
 
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    message("Clang-specific configurations...")
+
+    SET(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp")
+    # Set the output path for the assembly listing and map file
+    set_target_properties(Cards PROPERTIES
+            COMPILE_OPTIONS "-save-temps=intel"  # Generate assembly listing in Intel syntax
+            )
+
+    # Pass a preprocessor macro to the compiler
+    target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
 else()
     # Other compiler configurations
     message("Other compiler configurations...")
