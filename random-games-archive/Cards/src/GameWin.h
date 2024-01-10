@@ -16,7 +16,8 @@ public:
     // Methods
 
     // Diagnostic method
-    void printName();
+    [[nodiscard]] const GameWin* printAddress() const;
+    static void printClassName();
 };
 
 

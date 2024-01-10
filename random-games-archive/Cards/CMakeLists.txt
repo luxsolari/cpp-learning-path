@@ -30,7 +30,8 @@ set(SOURCE_FILES src/Program.cpp
         src/GameWin.cpp
         src/GameWin.h
         src/GameUnix.cpp
-        src/GameUnix.h)
+        src/GameUnix.h
+        src/enums/Suits.h)
 
 # Define your target
 add_executable(Cards ${SOURCE_FILES})

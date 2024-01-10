@@ -14,8 +14,12 @@ GameUnix *GameUnix::getInstance() {
     return &instance;
 }
 
-void GameUnix::printName() {
+void GameUnix::printAddress() {
     // Print address of the instance
     std::cout << "GameUnix instance address: " << this << std::endl;
+}
+
+void GameUnix::printClassName() {
+    std::cout << "GameUnix" << std::endl;
 }
 

@@ -16,7 +16,8 @@ public:
     // Methods
 
     // Diagnostic method
-    void printName();
+    void printAddress();
+    static void printClassName();
 };
 
 

@@ -14,7 +14,11 @@ GameWin *GameWin::getInstance() {
     return &instance;
 }
 
-void GameWin::printName() {
-    // Print address of the instance
-    std::cout << "GameWin instance address: " << this << std::endl;
+const GameWin* GameWin::printAddress() const {
+    return this;
+}
+
+
+void GameWin::printClassName() {
+    std::cout << "GameWin" << std::endl;
 }
