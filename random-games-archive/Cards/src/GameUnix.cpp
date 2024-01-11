@@ -9,14 +9,13 @@ GameUnix::GameUnix() = default;
 
 GameUnix::~GameUnix() = default;
 
-GameUnix *GameUnix::getInstance() {
-    static GameUnix instance;
+const GameUnix* GameUnix::getInstance() {
+    static const GameUnix instance;
     return &instance;
 }
 
-void GameUnix::printAddress() {
-    // Print address of the instance
-    std::cout << "GameUnix instance address: " << this << std::endl;
+const GameUnix* GameUnix::printAddress() const {
+    return this;
 }
 
 void GameUnix::printClassName() {

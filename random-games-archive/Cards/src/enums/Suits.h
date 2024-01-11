@@ -30,15 +30,15 @@ enum class Colors {
 };
 
 #ifdef _WIN32
-// color setter
+// ConsoleColor setter
 inline void SetColor(WORD color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
 // helper class
-class color {
+class ConsoleColor {
 public:
-    explicit color(WORD val) : m_val(val) { }
+    explicit ConsoleColor(WORD val) : m_val(val) { }
 
     void set() const {
         SetColor(m_val);
@@ -49,21 +49,22 @@ private:
 };
 
 // overload operator<< to get manipulator to work
-inline std::wostream& operator<<(std::wostream& os, const color& c) {
+inline std::wostream& operator<<(std::wostream& os, const ConsoleColor& c) {
     c.set();
     return os;
 }
 
-// instances of helper class to avoid need to remember 4 is red, etc
-static const color red((WORD) Colors::RED);
-static const color black((WORD) Colors::BLACK);
-static const color blue((WORD) Colors::BLUE);
-static const color green((WORD) Colors::GREEN);
+namespace ColorCodes {
+    const ConsoleColor Red((WORD) Colors::RED);
+    const ConsoleColor Black((WORD) Colors::BLACK);
+    const ConsoleColor Blue((WORD) Colors::BLUE);
+    const ConsoleColor Green((WORD) Colors::GREEN);
+}
 
 // suit symbol for Windows
 const std::wstring HEARTS_SYMBOL     = L"\u2665";
-const std::wstring DIAMONDS_SYMBOL   = L"\u2666";
 const std::wstring CLUBS_SYMBOL      = L"\u2663";
+const std::wstring DIAMONDS_SYMBOL   = L"\u2666";
 const std::wstring SPADES_SYMBOL     = L"\u2660";
 
 namespace SuitUtils {
@@ -71,10 +72,10 @@ namespace SuitUtils {
         _setmode(_fileno(stdout), _O_U16TEXT);
         switch (suitToSelect) {
             case static_cast<int>(Suits::HEARTS):
-                std::wcout << red << HEARTS_SYMBOL << black;
+                std::wcout << ColorCodes::Red << HEARTS_SYMBOL << ColorCodes::Black;
                 break;
             case static_cast<int>(Suits::DIAMONDS):
-                std::wcout << red << DIAMONDS_SYMBOL << black;
+                std::wcout << ColorCodes::Red << DIAMONDS_SYMBOL << ColorCodes::Black;
                 break;
             case static_cast<int>(Suits::CLUBS):
                 std::wcout << CLUBS_SYMBOL;
@@ -97,20 +98,34 @@ const std::string CLUB = "♣︎";
 const std::string HEART = "♥︎";
 const std::string DIAMOND = "♦︎";
 
-// Define color codes for *nix
-const std::string RED = "\033[31m";
-const std::string GREEN = "\033[32m";
-const std::string BLUE = "\033[34m";
-const std::string WHITE = "\033[37m";
+namespace ColorSymbols {
+    const std::wstring RED = L"\033[31m";
+    const std::wstring GREEN = L"\033[32m";
+    const std::wstring BLUE = L"\033[34m";
+    const std::wstring YELLOW = L"\033[33m";
+    const std::wstring MAGENTA = L"\033[35m";
+    const std::wstring CYAN = L"\033[36m";
+    const std::wstring WHITE = L"\033[37m";
+    const std::wstring BLACK = L"\033[30m";
+    const std::wstring RESET = L"\033[0m";
+}
+
+namespace StyleSymbols {
+    const std::wstring BOLD = L"\033[1m";
+    const std::wstring UNDERLINE = L"\033[4m";
+    const std::wstring REVERSED = L"\033[7m";
+    const std::wstring BLINK = L"\033[5m";
+    const std::wstring RESET = L"\033[0m";
+}
 
 namespace SuitUtils {
     void printSuit(int suitToSelect) {
         switch (suitToSelect) {
             case static_cast<int>(Suits::HEARTS):
-                std::cout << RED << HEART << WHITE;
+                std::cout << ColorSymbols::Red << HEART << ColorSymbols::White;
                 break;
             case static_cast<int>(Suits::DIAMONDS):
-                std::cout << RED << DIAMOND << WHITE;
+                std::cout << ColorSymbols::Red << DIAMOND << ColorSymbols::White;
                 break;
             case static_cast<int>(Suits::CLUBS):
                 std::cout << CLUB;

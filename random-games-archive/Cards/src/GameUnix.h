@@ -11,12 +11,12 @@ public:
     GameUnix();
     ~GameUnix();
     // Singleton
-    static GameUnix* getInstance();
+    static const GameUnix* getInstance();
 
     // Methods
 
     // Diagnostic method
-    void printAddress();
+    [[nodiscard]] const GameUnix* printAddress() const;
     static void printClassName();
 };
 

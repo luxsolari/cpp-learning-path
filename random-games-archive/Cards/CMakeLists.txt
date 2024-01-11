@@ -4,9 +4,9 @@ project(Cards CXX ASM)
 # Set the C++ standard to use
 set(CMAKE_CXX_STANDARD 11)
 
-# Define ANSI escape codes for text color
+# Define ANSI escape codes for text ConsoleColor
 if(CMAKE_HOST_WIN32)
-    # On Windows, use the WinAPI for console color
+    # On Windows, use the WinAPI for console ConsoleColor
     set(ANSI_RESET "")
     set(ANSI_RED "")
     set(ANSI_GREEN "")
