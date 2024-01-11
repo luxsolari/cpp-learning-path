@@ -57,7 +57,7 @@ if(MSVC)
             COMPILE_OPTIONS "/FAs"        # Generate assembly listing
             VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")  # Set working directory for debugging
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
+    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1)
 
 elseif (CMAKE_COMPILER_IS_GNUCXX)
     message("GCC or Clang-specific configurations...")
@@ -69,7 +69,7 @@ elseif (CMAKE_COMPILER_IS_GNUCXX)
             LINK_FLAGS "-Wl,-Map=${OUTPUT_PATH}/main.map")               # Generate a map file
 
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
+    target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     message("Clang-specific configurations...")
@@ -81,7 +81,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
             )
 
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE YOUR_MACRO=42)
+    target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
 else()
     # Other compiler configurations
     message("Other compiler configurations...")

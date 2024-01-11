@@ -1,7 +1,7 @@
 //
 // Created by luxsolari on 09/01/2024.
 //
-
+#ifdef WINDOWS_PLATFORM
 #include <iostream>
 #include <thread>
 #include "GameWin.h"
@@ -30,3 +30,4 @@ const GameWin* GameWin::printAddress() const {
 void GameWin::printClassName() {
     std::cout << "GameWin" << std::endl;
 }
+#endif //WINDOWS_PLATFORM

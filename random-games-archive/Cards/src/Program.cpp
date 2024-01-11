@@ -1,40 +1,24 @@
 #include <iostream>
-#include <string>
 #include "enums/Suits.h"
-
-#ifdef _WIN32
+#ifdef WINDOWS_PLATFORM
 #include "GameWin.h"
 #else
 #include "GameUnix.h"
 #endif
 int main()
 {
-	std::cout << "Spades: "  ;
-    SuitUtils::printSuit(static_cast<int>(Suits::SPADES));
-    std::cout << "\n";
-
-	std::cout << "Hearts: "  ;
-    SuitUtils::printSuit(static_cast<int>(Suits::HEARTS));
-    std::cout << "\n";
-
-	std::cout << "Clubs: "   ;
-    SuitUtils::printSuit(static_cast<int>(Suits::CLUBS));
-    std::cout << "\n";
-
-	std::cout << "Diamonds: ";
-    SuitUtils::printSuit(static_cast<int>(Suits::DIAMONDS));
-	std::cout << "\n";
-
-#ifdef _WIN32
+#ifdef WINDOWS_PLATFORM
     // Get instance of GameWin
     auto gameWin = GameWin::getInstance();
     // Print address of the instance
     std::cout << "GameWin address: " << gameWin->printAddress() << std::endl;
 #else
     // Get instance of GameUnix
-    GameUnix* gameUnix = GameUnix::getInstance();
+    const GameUnix* gameUnix = GameUnix::getInstance();
     // Print address of the instance
     std::cout << "GameUnix address: " << gameUnix->printAddress() << std::endl;
+    // Print size of console window
+    std::cout << "Console window size: " << GameUnix::getConsoleSize() << std::endl;
 #endif
     std::cout << "Press enter to exit...";
 	std::cin.get();

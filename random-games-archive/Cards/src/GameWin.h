@@ -2,6 +2,7 @@
 // Created by luxsolari on 09/01/2024.
 //
 
+#ifdef WINDOWS_PLATFORM
 #ifndef CARDS_GAMEWIN_H
 #define CARDS_GAMEWIN_H
 #include <chrono>
@@ -26,3 +27,4 @@ public:
 
 
 #endif //CARDS_GAMEWIN_H
+#endif //WINDOWS_PLATFORM

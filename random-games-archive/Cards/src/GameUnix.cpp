@@ -1,7 +1,7 @@
 //
 // Created by luxsolari on 09/01/2024.
 //
-
+#ifdef UNIX_PLATFORM
 #include <iostream>
 #include "GameUnix.h"
 
@@ -22,3 +22,9 @@ void GameUnix::printClassName() {
     std::cout << "GameUnix" << std::endl;
 }
 
+std::string GameUnix::getConsoleSize() {
+    // return size of console window
+    return "Not implemented yet";
+}
+
+#endif //UNIX_PLATFORM

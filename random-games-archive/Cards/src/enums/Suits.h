@@ -8,7 +8,7 @@
 #include <iostream>
 
 // if WINDOWS
-#ifdef _WIN32
+#ifdef WINDOWS_PLATFORM
 #include <io.h>
 #include <Windows.h>
 #include <minwindef.h>
@@ -29,7 +29,7 @@ enum class Colors {
     BLACK = 7
 };
 
-#ifdef _WIN32
+#ifdef WINDOWS_PLATFORM
 // ConsoleColor setter
 inline void SetColor(WORD color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
@@ -99,33 +99,33 @@ const std::string HEART = "♥︎";
 const std::string DIAMOND = "♦︎";
 
 namespace ColorSymbols {
-    const std::wstring RED = L"\033[31m";
-    const std::wstring GREEN = L"\033[32m";
-    const std::wstring BLUE = L"\033[34m";
-    const std::wstring YELLOW = L"\033[33m";
-    const std::wstring MAGENTA = L"\033[35m";
-    const std::wstring CYAN = L"\033[36m";
-    const std::wstring WHITE = L"\033[37m";
-    const std::wstring BLACK = L"\033[30m";
-    const std::wstring RESET = L"\033[0m";
+    const std::string RED = "\033[31m";
+    const std::string GREEN = "\033[32m";
+    const std::string BLUE = "\033[34m";
+    const std::string YELLOW = "\033[33m";
+    const std::string MAGENTA = "\033[35m";
+    const std::string CYAN = "\033[36m";
+    const std::string WHITE = "\033[37m";
+    const std::string BLACK = "\033[30m";
+    const std::string RESET = "\033[0m";
 }
 
 namespace StyleSymbols {
-    const std::wstring BOLD = L"\033[1m";
-    const std::wstring UNDERLINE = L"\033[4m";
-    const std::wstring REVERSED = L"\033[7m";
-    const std::wstring BLINK = L"\033[5m";
-    const std::wstring RESET = L"\033[0m";
+    const std::string BOLD = "\033[1m";
+    const std::string UNDERLINE = "\033[4m";
+    const std::string REVERSED = "\033[7m";
+    const std::string BLINK = "\033[5m";
+    const std::string RESET = "\033[0m";
 }
 
 namespace SuitUtils {
     void printSuit(int suitToSelect) {
         switch (suitToSelect) {
             case static_cast<int>(Suits::HEARTS):
-                std::cout << ColorSymbols::Red << HEART << ColorSymbols::White;
+                std::cout << ColorSymbols::RED << HEART << ColorSymbols::RESET;
                 break;
             case static_cast<int>(Suits::DIAMONDS):
-                std::cout << ColorSymbols::Red << DIAMOND << ColorSymbols::White;
+                std::cout << ColorSymbols::RED << DIAMOND << ColorSymbols::RESET;
                 break;
             case static_cast<int>(Suits::CLUBS):
                 std::cout << CLUB;
