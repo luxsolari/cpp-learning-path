@@ -5,33 +5,33 @@
 #include <iostream>
 #include <vector>
 #include <Windows.h>
-#include "GameWin.h"
+#include "WinConsoleUtils.h"
 
-GameWin::GameWin() = default;
+WinConsoleUtils::WinConsoleUtils() = default;
 
-GameWin::~GameWin() = default;
+WinConsoleUtils::~WinConsoleUtils() = default;
 
-const GameWin* GameWin::getInstance() {
-    static const GameWin instance;
+const WinConsoleUtils* WinConsoleUtils::getInstance() {
+    static const WinConsoleUtils instance;
     return &instance;
 }
 
-const GameWin* GameWin::printAddress() const {
+const WinConsoleUtils* WinConsoleUtils::printAddress() const {
     return this;
 }
 
-void GameWin::printClassName() {
-    std::cout << "GameWin" << std::endl;
+void WinConsoleUtils::printClassName() {
+    std::cout << "WinConsoleUtils" << std::endl;
 }
 
-std::vector<int> GameWin::getConsoleSize() const {
+std::vector<int> WinConsoleUtils::getConsoleSize() const {
     // return size of console window
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     return {csbi.srWindow.Right - csbi.srWindow.Left + 1, csbi.srWindow.Bottom - csbi.srWindow.Top + 1};
 }
 
-void GameWin::drawBorder(int width, int height) const {
+void WinConsoleUtils::drawBorder(int width, int height) const {
     // Draw top border
     for (int i = 0; i < width; ++i) {
         std::cout << "-";
@@ -54,7 +54,7 @@ void GameWin::drawBorder(int width, int height) const {
     std::cout << std::endl;
 }
 
-void GameWin::setConsoleSize(int width, int height) const {
+void WinConsoleUtils::setConsoleSize(int width, int height) const {
     // Set console window size
     SMALL_RECT windowSize = {0, 0, static_cast<SHORT>(width), static_cast<SHORT>(height)};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
@@ -71,13 +71,13 @@ void GameWin::setConsoleSize(int width, int height) const {
 
 }
 
-void GameWin::setCursorPosition(int x, int y) const {
+void WinConsoleUtils::setCursorPosition(int x, int y) const {
     // Set cursor position
     COORD coord = {static_cast<SHORT>(x), static_cast<SHORT>(y)};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void GameWin::moveCursorUp(int steps) const {
+void WinConsoleUtils::moveCursorUp(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -86,7 +86,7 @@ void GameWin::moveCursorUp(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void GameWin::moveCursorDown(int steps) const {
+void WinConsoleUtils::moveCursorDown(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -95,7 +95,7 @@ void GameWin::moveCursorDown(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void GameWin::moveCursorLeft(int steps) const {
+void WinConsoleUtils::moveCursorLeft(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -104,7 +104,7 @@ void GameWin::moveCursorLeft(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void GameWin::moveCursorRight(int steps) const {
+void WinConsoleUtils::moveCursorRight(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -113,13 +113,13 @@ void GameWin::moveCursorRight(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void GameWin::returnCursorToStart() const {
+void WinConsoleUtils::returnCursorToStart() const {
     // Set cursor position
     COORD coord = {0, 0};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void GameWin::clearScreen() const {
+void WinConsoleUtils::clearScreen() const {
     // Get console window size
     std::vector<int> consoleSize = getConsoleSize();
     int width = consoleSize.at(0);
@@ -135,7 +135,7 @@ void GameWin::clearScreen() const {
     returnCursorToStart();
 }
 
-void GameWin::returnCarriage() const {
+void WinConsoleUtils::returnCarriage() const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -144,7 +144,7 @@ void GameWin::returnCarriage() const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void GameWin::drawCard(int x, int y, int width, int height) const {
+void WinConsoleUtils::drawCard(int x, int y, int width, int height) const {
     // Draw top border
     setCursorPosition(x, y);
     for (int i = 0; i < width; ++i) {
@@ -166,7 +166,7 @@ void GameWin::drawCard(int x, int y, int width, int height) const {
     }
 }
 
-std::vector<int> GameWin::getCursorPosition() const {
+std::vector<int> WinConsoleUtils::getCursorPosition() const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);

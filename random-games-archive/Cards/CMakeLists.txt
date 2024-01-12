@@ -4,9 +4,9 @@ project(Cards CXX ASM)
 # Set the C++ standard to use
 set(CMAKE_CXX_STANDARD 11)
 
-# Define ANSI escape codes for text ConsoleColor
+# Define ANSI escape codes for text SuitColor
 if(CMAKE_HOST_WIN32)
-    # On Windows, use the WinAPI for console ConsoleColor
+    # On Windows, use the WinAPI for console SuitColor
     set(ANSI_RESET "")
     set(ANSI_RED "")
     set(ANSI_GREEN "")
@@ -30,10 +30,8 @@ endif()
 
 # Add your source files
 set(SOURCE_FILES src/Program.cpp
-        src/GameWin.cpp
-        src/GameWin.h
-        src/GameUnix.cpp
-        src/GameUnix.h
+        src/utils/WinConsoleUtils.cpp
+        src/utils/WinConsoleUtils.h
         src/enums/Suits.h)
 
 # Define your target

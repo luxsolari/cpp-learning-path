@@ -6,17 +6,17 @@
 #define CARDS_GAMEWIN_H
 #include <vector>
 
-class GameWin {
+class WinConsoleUtils {
 public:
-    GameWin();
-    ~GameWin();
+    WinConsoleUtils();
+    ~WinConsoleUtils();
     // Singleton
-    static const GameWin* getInstance();
+    static const WinConsoleUtils* getInstance();
 
     // Methods
 
     // Diagnostic method
-    const GameWin* printAddress() const;
+    const WinConsoleUtils* printAddress() const;
     std::vector<int> getConsoleSize() const;
     std::vector<int> getCursorPosition() const;
     void setConsoleSize(int width, int height) const;
