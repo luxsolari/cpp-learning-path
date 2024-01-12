@@ -30,9 +30,13 @@ endif()
 
 # Add your source files
 set(SOURCE_FILES src/Program.cpp
-        src/utils/WinConsoleUtils.cpp
-        src/utils/WinConsoleUtils.h
-        src/enums/Suits.h)
+        src/utils/WindowsConsole.cpp
+        src/utils/WindowsConsole.h
+        src/enums/Suits.h
+        
+        src/utils/Console.h
+        src/utils/ConsoleFactory.cpp
+        src/utils/ConsoleFactory.h)
 
 # Define your target
 add_executable(Cards ${SOURCE_FILES})

@@ -47,10 +47,6 @@ const std::wstring BOTTOM_LEFT_CORNER= L"\u2514";
 const std::wstring BOTTOM_RIGHT_CORNER= L"\u2518";
 const std::wstring HORIZONTAL_BORDER = L"\u2500";
 const std::wstring VERTICAL_BORDER   = L"\u2502";
-const std::wstring TOP_BORDER        = L"\u252C";
-const std::wstring BOTTOM_BORDER     = L"\u2534";
-const std::wstring LEFT_BORDER       = L"\u251C";
-const std::wstring RIGHT_BORDER      = L"\u2524";
 
 // SuitColor setter
 inline void SetColor(WORD color) {
