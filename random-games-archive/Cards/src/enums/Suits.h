@@ -54,7 +54,7 @@ inline std::wostream& operator<<(std::wostream& os, const ConsoleColor& c) {
     return os;
 }
 
-namespace ColorCodes {
+namespace ColorUtils {
     const ConsoleColor Red((WORD) Colors::RED);
     const ConsoleColor Black((WORD) Colors::BLACK);
     const ConsoleColor Blue((WORD) Colors::BLUE);
@@ -66,16 +66,22 @@ const std::wstring HEARTS_SYMBOL     = L"\u2665";
 const std::wstring CLUBS_SYMBOL      = L"\u2663";
 const std::wstring DIAMONDS_SYMBOL   = L"\u2666";
 const std::wstring SPADES_SYMBOL     = L"\u2660";
+// hollow suits
+const std::wstring HEARTS_SYMBOL2    = L"\u2661";
+const std::wstring CLUBS_SYMBOL2     = L"\u2667";
+const std::wstring DIAMONDS_SYMBOL2  = L"\u2662";
+const std::wstring SPADES_SYMBOL2    = L"\u2664";
+
 
 namespace SuitUtils {
     void printSuit(int suitToSelect) {
         _setmode(_fileno(stdout), _O_U16TEXT);
         switch (suitToSelect) {
             case static_cast<int>(Suits::HEARTS):
-                std::wcout << ColorCodes::Red << HEARTS_SYMBOL << ColorCodes::Black;
+                std::wcout << ColorUtils::Red << HEARTS_SYMBOL << ColorUtils::Black;
                 break;
             case static_cast<int>(Suits::DIAMONDS):
-                std::wcout << ColorCodes::Red << DIAMONDS_SYMBOL << ColorCodes::Black;
+                std::wcout << ColorUtils::Red << DIAMONDS_SYMBOL << ColorUtils::Black;
                 break;
             case static_cast<int>(Suits::CLUBS):
                 std::wcout << CLUBS_SYMBOL;
@@ -84,7 +90,7 @@ namespace SuitUtils {
                 std::wcout << SPADES_SYMBOL;
                 break;
             default:
-                std::wcout << "Invalid suit." << std::endl;
+                std::cout << "Invalid suit." << std::endl;
                 break;
         }
         _setmode(_fileno(stdout), _O_TEXT);

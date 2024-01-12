@@ -5,7 +5,6 @@
 #ifndef CARDS_GAMEUNIX_H
 #define CARDS_GAMEUNIX_H
 
-
 class GameUnix {
 public:
     GameUnix();
