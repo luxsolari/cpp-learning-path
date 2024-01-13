@@ -4,11 +4,12 @@
 
 #include "ConsoleFactory.h"
 #include "WindowsConsole.h"
+#include "UnixConsole.h"
 
 const Console* ConsoleFactory::createConsole() {
 #ifdef WINDOWS_PLATFORM
     return WindowsConsole::getInstance();
 #else
-    //return new LinuxConsole();
+    return UnixConsole::getInstance();
 #endif
 }

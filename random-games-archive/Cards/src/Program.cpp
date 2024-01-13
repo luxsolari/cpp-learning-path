@@ -2,12 +2,10 @@
 #include "utils/ConsoleFactory.h"
 
 int main() {
-    const Console* console = ConsoleFactory::createConsole();
-    console->setConsoleSize(120, 25);
-    console->setCursorPosition(0,0);
-    console->drawSquareBorder(100, 25, {10,0});
+    auto console = ConsoleFactory::createConsole();
+    console->printToConsole("Hello World!\n");
+    console->printToConsoleAtLocation(10, 10, "Hello World!\n");
 
-    std::cout << "Press enter to exit...";
-    std::cin.get();
+    console->waitEnterKey();
     return 0;
 }

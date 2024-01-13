@@ -36,7 +36,9 @@ set(SOURCE_FILES src/Program.cpp
         
         src/utils/Console.h
         src/utils/ConsoleFactory.cpp
-        src/utils/ConsoleFactory.h)
+        src/utils/ConsoleFactory.h
+        src/utils/UnixConsole.cpp
+        src/utils/UnixConsole.h)
 
 # Define your target
 add_executable(Cards ${SOURCE_FILES})
@@ -51,8 +53,10 @@ file(MAKE_DIRECTORY ${OUTPUT_PATH})
 # Print compiler information
 message("${ANSI_RED}Compiler is: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} ${CMAKE_CXX_COMPILER_VERSION}${ANSI_RESET}")
 
-# Enable assembly output for MSVC
-if(MSVC)
+# OS-specific configurations
+if(CMAKE_HOST_WIN32 AND (CMAKE_CXX_COMPILER_ID MATCHES "MSVC" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"))
+
+    # Enable assembly output for Windows and MSVC or Windows and GCC
     message("MSVC-specific configurations...")
     # Set the output path for the assembly listing
     set_target_properties(Cards PROPERTIES
@@ -61,8 +65,8 @@ if(MSVC)
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1)
 
-elseif (CMAKE_COMPILER_IS_GNUCXX)
-    message("GCC or Clang-specific configurations...")
+elseif (CMAKE_HOST_LINUX)
+    message("Linux-specific configurations...")
 
     SET(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp")
     # Set the output path for the assembly listing
@@ -73,17 +77,25 @@ elseif (CMAKE_COMPILER_IS_GNUCXX)
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
 
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    message("Clang-specific configurations...")
+    find_package(Curses REQUIRED)
+    target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
+    target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
+
+elseif (CMAKE_HOST_APPLE)
+    message("Apple-specific configurations...")
 
     SET(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp")
     # Set the output path for the assembly listing and map file
     set_target_properties(Cards PROPERTIES
-            COMPILE_OPTIONS "-save-temps=intel"  # Generate assembly listing in Intel syntax
-            )
+        COMPILE_OPTIONS "-save-temps=intel"  # Generate assembly listing in Intel syntax
+        )
 
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
+
+    find_package(Curses REQUIRED)
+    target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
+    target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
 else()
     # Other compiler configurations
     message("Other compiler configurations...")

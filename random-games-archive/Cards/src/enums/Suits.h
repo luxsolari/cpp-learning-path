@@ -102,16 +102,6 @@ namespace SuitUtils {
         }
         _setmode(_fileno(stdout), _O_TEXT);
     }
-
-    void printBorders() {
-        _setmode(_fileno(stdout), _O_U16TEXT);
-        std::wcout << TOP_LEFT_CORNER << HORIZONTAL_BORDER << HORIZONTAL_BORDER<< HORIZONTAL_BORDER  << HORIZONTAL_BORDER << HORIZONTAL_BORDER << TOP_RIGHT_CORNER << std::endl;
-        std::wcout << VERTICAL_BORDER << "X    " << VERTICAL_BORDER << std::endl;
-        std::wcout << VERTICAL_BORDER << "  " << ColorUtils::Red << DIAMONDS_SYMBOL << ColorUtils::Black << "  " << VERTICAL_BORDER << std::endl;
-        std::wcout << VERTICAL_BORDER << "    X" << VERTICAL_BORDER << std::endl;
-        std::wcout << BOTTOM_LEFT_CORNER << HORIZONTAL_BORDER << HORIZONTAL_BORDER << HORIZONTAL_BORDER << HORIZONTAL_BORDER << HORIZONTAL_BORDER << BOTTOM_RIGHT_CORNER << std::endl;
-        _setmode(_fileno(stdout), _O_TEXT);
-    }
 }
 // if UNIX
 #else
