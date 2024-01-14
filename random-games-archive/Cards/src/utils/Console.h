@@ -5,6 +5,9 @@
 #ifndef CARDS_CONSOLE_H
 #define CARDS_CONSOLE_H
 #include <vector>
+#include <memory>
+
+#ifdef UNIX_PLATFORM
 #include <ncurses.h>
 
 class NcursesWrapper {
@@ -64,6 +67,7 @@ public:
         ::getch();
     }
 };
+#endif //UNIX_PLATFORM
 
 class Console {
 public:
@@ -72,6 +76,7 @@ public:
     virtual std::vector<int> getConsoleSize() const = 0;
     virtual std::vector<int> getCursorPosition() const = 0;
     virtual void printToConsole(const char *format, ...) const = 0;
+    virtual void printToConsoleWide(const wchar_t *format, ...) const = 0;
     virtual void printToConsoleAtLocation(int y, int x, const char *format, ...) const = 0;
     virtual void setConsoleSize(int width, int height) const = 0;
     virtual void setCursorPosition(int x, int y) const = 0;
@@ -94,8 +99,11 @@ protected:
     // console size
     int m_width{0};
     int m_height{0};
-    std::unique_ptr<NcursesWrapper> m_ncursesWrapper{std::unique_ptr<NcursesWrapper>(new NcursesWrapper())};
-};
 
+#ifdef UNIX_PLATFORM
+    // ncurses wrapper
+    std::unique_ptr<NcursesWrapper> m_ncursesWrapper{std::unique_ptr<NcursesWrapper>(new NcursesWrapper())};
+#endif //UNIX_PLATFORM
+};
 
 #endif //CARDS_CONSOLE_H

@@ -19,9 +19,12 @@ public:
     static const WindowsConsole* getInstance();
 
     // Methods
-    const WindowsConsole* printAddress() const override;
+    const WindowsConsole* getAddress() const override;
     std::vector<int> getConsoleSize() const override;
     std::vector<int> getCursorPosition() const override;
+    void printToConsole(const char *format, ...) const override;
+    void printToConsoleWide(const wchar_t *format, ...) const override;
+    void printToConsoleAtLocation(int y, int x, const char *format, ...) const override;
     void setConsoleSize(int width, int height) const override;
     void setCursorPosition(int x, int y) const override;
     void moveCursorUp(int steps) const override;
@@ -32,7 +35,8 @@ public:
     void returnCarriage() const override;
     void clearScreen() const override;
     void drawSquareBorder(int width, int height, std::vector<int> startPos) const override;
-    void printClassName() override;
+    void printClassName() const override;
+    void waitEnterKey() const override;
 
 };
 

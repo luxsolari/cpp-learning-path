@@ -14,19 +14,21 @@ const WindowsConsole* WindowsConsole::getInstance() {
     return &instance;
 }
 
-const WindowsConsole* WindowsConsole::printAddress() const {
+const WindowsConsole* WindowsConsole::getAddress() const {
     return this;
 }
 
-void WindowsConsole::printClassName() {
+void WindowsConsole::printClassName() const {
     std::cout << "WindowsConsole" << std::endl;
 }
 
 std::vector<int> WindowsConsole::getConsoleSize() const {
-    // return size of console window
+    // Get console window size
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    return {csbi.srWindow.Right - csbi.srWindow.Left + 1, csbi.srWindow.Bottom - csbi.srWindow.Top + 1};
+    int width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    int height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    return std::vector<int>{width, height};
 }
 
 // Draws a square border with the specified width and height. The border is drawn from startPos.
@@ -49,27 +51,27 @@ void WindowsConsole::drawSquareBorder(int width, int height, std::vector<int> st
     setCursorPosition(startPos.at(0), startPos.at(1));
 
     // Draw top border
-    std::wcout << TOP_LEFT_CORNER;
+    this->printToConsoleWide(TOP_LEFT_CORNER.c_str());
     for (int i = 0; i < width - 2; ++i) {
-        std::wcout << HORIZONTAL_BORDER;
+       this->printToConsoleWide(HORIZONTAL_BORDER.c_str());
     }
-    std::wcout << TOP_RIGHT_CORNER;
+    this->printToConsoleWide(TOP_RIGHT_CORNER.c_str());
 
     // Draw sides
     for (int i = 0; i < height - 2; ++i) {
         setCursorPosition(startPos.at(0), startPos.at(1) + i + 1);
-        std::wcout << VERTICAL_BORDER;
+        this->printToConsoleWide(VERTICAL_BORDER.c_str());
         setCursorPosition(startPos.at(0) + width - 1, startPos.at(1) + i + 1);
-        std::wcout << VERTICAL_BORDER;
+        this->printToConsoleWide(VERTICAL_BORDER.c_str());
     }
 
     // Draw bottom border
     setCursorPosition(startPos.at(0), startPos.at(1) + height - 1);
-    std::wcout << BOTTOM_LEFT_CORNER;
+    this->printToConsoleWide(BOTTOM_LEFT_CORNER.c_str());
     for (int i = 0; i < width - 2; ++i) {
-        std::wcout << HORIZONTAL_BORDER;
+        this->printToConsoleWide(HORIZONTAL_BORDER.c_str());
     }
-    std::wcout << BOTTOM_RIGHT_CORNER;
+    this->printToConsoleWide(BOTTOM_RIGHT_CORNER.c_str());
     std::wcout << std::endl;
 
     // Return console to ANSI mode
@@ -171,7 +173,34 @@ std::vector<int> WindowsConsole::getCursorPosition() const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    return {csbi.dwCursorPosition.X, csbi.dwCursorPosition.Y};
+    return std::vector<int>{csbi.dwCursorPosition.X, csbi.dwCursorPosition.Y};
+}
+
+void WindowsConsole::printToConsole(const char *format, ...) const {
+    // print to console window (Windows only)
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
+}
+
+void WindowsConsole::printToConsoleWide(const wchar_t *format, ...) const {
+    // print with wide chars to console window (Windows only)
+    _setmode(_fileno(stdout), _O_U16TEXT);
+    va_list args;
+            va_start(args, format);
+    vwprintf((wchar_t*)format, args);
+            va_end(args);
+    // return console to ANSI mode
+    _setmode(_fileno(stdout), _O_TEXT);
+}
+
+void WindowsConsole::printToConsoleAtLocation(int y, int x, const char *format, ...) const {
+
+}
+
+void WindowsConsole::waitEnterKey() const {
+    std::cin.get();
 }
 
 

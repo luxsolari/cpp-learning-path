@@ -2,6 +2,7 @@
 // Created by Lux Solari on 12/01/2024.
 //
 
+#ifdef UNIX_PLATFORM
 #ifndef CARDS_UNIXCONSOLE_H
 #define CARDS_UNIXCONSOLE_H
 #include "Console.h"
@@ -40,3 +41,4 @@ private:
 };
 
 #endif //CARDS_UNIXCONSOLE_H
+#endif //UNIX_PLATFORM

@@ -2,6 +2,7 @@
 // Created by Lux Solari on 12/01/2024.
 //
 
+#ifdef UNIX_PLATFORM
 #include <iostream>
 #include "UnixConsole.h"
 
@@ -80,3 +81,4 @@ void UnixConsole::waitEnterKey() const {
     this->m_ncursesWrapper->waitEnterKey();
 }
 
+#endif //UNIX_PLATFORM
