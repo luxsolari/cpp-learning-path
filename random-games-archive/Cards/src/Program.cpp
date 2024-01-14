@@ -1,5 +1,4 @@
 #include "utils/ConsoleFactory.h"
-#include "enums/Suits.h"
 
 int main() {
     auto console = ConsoleFactory::createConsole();
@@ -10,5 +9,6 @@ int main() {
     console->drawSquareBorder(10, 10, {10, 10});
     console->drawSquareBorder(10, 10, {20, 10});
     console->waitEnterKey();
+
     return 0;
 }

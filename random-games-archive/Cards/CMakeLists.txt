@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(Cards CXX ASM)
+project(Cards LANGUAGES CXX ASM) # ASM is required for assembly output
 
 # Set the C++ standard to use
 set(CMAKE_CXX_STANDARD 11)
@@ -54,17 +54,32 @@ file(MAKE_DIRECTORY ${OUTPUT_PATH})
 message("${ANSI_RED}Compiler is: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} ${CMAKE_CXX_COMPILER_VERSION}${ANSI_RESET}")
 
 # OS-specific configurations
-if(CMAKE_HOST_WIN32 AND (CMAKE_CXX_COMPILER_ID MATCHES "MSVC" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"))
+# Windows on MSVC
+if(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+
+    project(Cards CXX ASM)
 
     # Enable assembly output for Windows and MSVC or Windows and GCC
     message("MSVC-specific configurations...")
     # Set the output path for the assembly listing
-    set_target_properties(Cards PROPERTIES
-            COMPILE_OPTIONS "/FAs"        # Generate assembly listing
-            VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")  # Set working directory for debugging
+    #set_target_properties(Cards PROPERTIES
+    #        COMPILE_OPTIONS "/FAs"        # Generate assembly listing
+    #        VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")  # Set working directory for debugging
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1)
+    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1 PDC_WIDE=1)
 
+# Windows on MinGW
+elseif(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    message("MinGW-specific configurations...")
+
+    # Enable assembly output for Windows and MSVC or Windows and GCC
+    #set_target_properties(Cards PROPERTIES
+    #        COMPILE_OPTIONS "-S"        # Generate assembly listing
+    #        VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")  # Set working directory for debugging
+    # Pass a preprocessor macro to the compiler
+    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1 PDC_WIDE=1)
+
+# Linux on GCC or Clang
 elseif (CMAKE_HOST_LINUX)
     message("Linux-specific configurations...")
 
@@ -81,6 +96,7 @@ elseif (CMAKE_HOST_LINUX)
     target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
 
+# Apple on Clang or GCC
 elseif (CMAKE_HOST_APPLE)
     message("Apple-specific configurations...")
 
@@ -96,8 +112,24 @@ elseif (CMAKE_HOST_APPLE)
     find_package(Curses REQUIRED)
     target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
+
+# Other Unix-like systems (including WSL)
+elseif (CMAKE_HOST_UNIX)
+    message("Unix-specific configurations...")
+
+    # Pass a preprocessor macro to the compiler
+    target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
+
+    # pass compiler flags for ncurses
+    target_compile_options(Cards PRIVATE -lncurses)
+
+    # Link against ncurses library
+    target_link_libraries(Cards PRIVATE ncurses)
+
+# Other systems (not supported)
 else()
     # Other compiler configurations
-    message("Other compiler configurations...")
-
+    message("Other compiler configurations are not supported.")
+    # raise an error
+    message(FATAL_ERROR "Unsupported platform/compiler combination")
 endif()

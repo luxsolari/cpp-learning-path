@@ -23,6 +23,7 @@ public:
     std::vector<int> getConsoleSize() const override;
     std::vector<int> getCursorPosition() const override;
     void printToConsole(const char *format, ...) const override;
+    void printToConsoleWide(const wchar_t *format, ...) const override;
     void printToConsoleAtLocation(int y, int x, const char *format, ...) const override;
     void setConsoleSize(int width, int height) const override;
     void setCursorPosition(int x, int y) const override;
