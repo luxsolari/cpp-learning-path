@@ -109,9 +109,12 @@ elseif (CMAKE_HOST_APPLE)
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
 
+
     find_package(Curses REQUIRED)
     target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
+    # pass compiler flags for ncurses
+    target_compile_options(Cards PRIVATE -lncurses)
 
 # Other Unix-like systems (including WSL)
 elseif (CMAKE_HOST_UNIX)
