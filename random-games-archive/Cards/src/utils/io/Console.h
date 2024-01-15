@@ -72,6 +72,8 @@ public:
 class Console {
 public:
     virtual ~Console() = default;
+
+    // Virtual methods to be implemented by derived classes
     virtual const class Console* getAddress() const = 0;
     virtual std::vector<int> getConsoleSize() const = 0;
     virtual std::vector<int> getCursorPosition() const = 0;
@@ -89,10 +91,30 @@ public:
     virtual void clearScreen() const = 0;
     virtual void drawSquareBorder(int width, int height, std::vector<int> startPos) const = 0;
     virtual void printClassName() const = 0;
-    virtual void waitEnterKey() const = 0;
+
+    // Public getters
+    bool isActive() const;
+    int getCursorX() const;
+    int getCursorY() const;
+    int getWidth() const;
+    int getHeight() const;
+    // Method to allow modification of console size variables
+    void setConsoleSize(int width, int height);
+    // Method to allow modification of cursor position variables
+    void setCursorPosition(int x, int y);
+    // Method to allow modification of console status
+    void setActive(bool active);
+    // Method to allow modification of console size changed status
+    void setSizeChanged(bool sizeChanged);
+    // Method to check if console size has changed
+    bool hasSizeChanged() const;
 
 // Variables
 protected:
+    // status
+    bool m_isActive{false}; // is console active?
+    bool m_sizeChanged{false}; // has console size changed?
+
     // cursor position
     int m_cursorX{0};
     int m_cursorY{0};

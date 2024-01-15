@@ -6,7 +6,7 @@
 #define CARDS_CONSOLEFACTORY_H
 
 
-#include "Console.h"
+#include "../io/Console.h"
 
 class ConsoleFactory {
 
@@ -20,7 +20,7 @@ public:
     ~ConsoleFactory() = delete;
 
     // Strategy method to create a console object based on the platform the program is running
-    static const Console* createConsole();
+    static Console* createConsole();
 
 };
 

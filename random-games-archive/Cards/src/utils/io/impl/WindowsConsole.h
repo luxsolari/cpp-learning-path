@@ -5,7 +5,7 @@
 #ifndef CARDS_GAMEWIN_H
 #define CARDS_GAMEWIN_H
 #include <vector>
-#include "Console.h"
+#include "../Console.h"
 
 class WindowsConsole : public Console {
 public:
@@ -16,7 +16,7 @@ public:
     WindowsConsole(WindowsConsole&&) = delete;
     WindowsConsole& operator=(const WindowsConsole&) = delete;
     WindowsConsole& operator=(WindowsConsole&&) = delete;
-    static const WindowsConsole* getInstance();
+    static WindowsConsole* getInstance();
 
     // Methods
     const WindowsConsole* getAddress() const override;
@@ -36,7 +36,6 @@ public:
     void clearScreen() const override;
     void drawSquareBorder(int width, int height, std::vector<int> startPos) const override;
     void printClassName() const override;
-    void waitEnterKey() const override;
 
 };
 

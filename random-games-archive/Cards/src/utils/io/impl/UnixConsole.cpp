@@ -78,10 +78,6 @@ void UnixConsole::printToConsoleAtLocation(int y, int x, const char *format, ...
     this->m_ncursesWrapper->refreshScreen();
 }
 
-void UnixConsole::waitEnterKey() const {
-    this->m_ncursesWrapper->waitEnterKey();
-}
-
 void UnixConsole::printToConsoleWide(const wchar_t *format, ...) const {
 
 }

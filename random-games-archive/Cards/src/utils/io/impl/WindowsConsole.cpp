@@ -7,10 +7,29 @@
 #include <Windows.h>
 #include <fcntl.h>
 #include <io.h>
+#include <conio.h>
+#include <thread>
+#include <chrono>
 #include "WindowsConsole.h"
 
-const WindowsConsole* WindowsConsole::getInstance() {
-    static const WindowsConsole instance;
+WindowsConsole* WindowsConsole::getInstance() {
+    static WindowsConsole instance;
+    // initialize variables here
+    instance.m_isActive = true;
+
+    std::vector<int> consoleSize = instance.getConsoleSize();
+    instance.m_width = consoleSize.at(0);
+    instance.m_height = consoleSize.at(1);
+    instance.m_cursorX = 0;
+    instance.m_cursorY = 0;
+
+    // hide cursor
+    //HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    //CONSOLE_CURSOR_INFO cursorInfo;
+    //GetConsoleCursorInfo(hConsole, &cursorInfo);
+    //cursorInfo.bVisible = false;
+    //SetConsoleCursorInfo(hConsole, &cursorInfo);
+
     return &instance;
 }
 
@@ -196,12 +215,13 @@ void WindowsConsole::printToConsoleWide(const wchar_t *format, ...) const {
 }
 
 void WindowsConsole::printToConsoleAtLocation(int y, int x, const char *format, ...) const {
-
+    // Set cursor position
+    setCursorPosition(x, y);
+    // print to console window (Windows only)
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
 }
-
-void WindowsConsole::waitEnterKey() const {
-    std::cin.get();
-}
-
 
 #endif //WINDOWS_PLATFORM

@@ -30,15 +30,28 @@ endif()
 
 # Add your source files
 set(SOURCE_FILES src/Program.cpp
-        src/utils/WindowsConsole.cpp
-        src/utils/WindowsConsole.h
+        src/utils/io/impl/WindowsConsole.cpp
+        src/utils/io/impl/WindowsConsole.h
         src/enums/Suits.h
-        
-        src/utils/Console.h
-        src/utils/ConsoleFactory.cpp
-        src/utils/ConsoleFactory.h
-        src/utils/UnixConsole.cpp
-        src/utils/UnixConsole.h)
+        src/utils/io/Console.h
+        src/utils/factory/ConsoleFactory.cpp
+        src/utils/factory/ConsoleFactory.h
+        src/utils/io/impl/UnixConsole.cpp
+        src/utils/io/impl/UnixConsole.h
+        src/managers/GameManager.cpp
+        src/managers/GameManager.h
+        src/managers/impl/WindowsGameManager.cpp
+        src/managers/impl/WindowsGameManager.h
+        src/managers/impl/UnixGameManager.cpp
+        src/managers/impl/UnixGameManager.h
+        src/managers/factory/GameManagerFactory.cpp
+        src/managers/factory/GameManagerFactory.h
+        src/utils/io/Input.cpp
+        src/utils/io/Input.h
+        src/utils/io/impl/WindowsInput.cpp
+        src/utils/io/impl/WindowsInput.h
+        src/utils/io/Console.cpp
+)
 
 # Define your target
 add_executable(Cards ${SOURCE_FILES})

@@ -3,10 +3,10 @@
 //
 
 #include "ConsoleFactory.h"
-#include "WindowsConsole.h"
-#include "UnixConsole.h"
+#include "../io/impl/WindowsConsole.h"
+#include "../io/impl/UnixConsole.h"
 
-const Console* ConsoleFactory::createConsole() {
+Console* ConsoleFactory::createConsole() {
 #ifdef WINDOWS_PLATFORM
     return WindowsConsole::getInstance();
 #else

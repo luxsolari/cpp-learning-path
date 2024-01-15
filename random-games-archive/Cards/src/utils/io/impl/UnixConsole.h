@@ -36,7 +36,6 @@ public:
     void clearScreen() const override;
     void drawSquareBorder(int width, int height, std::vector<int> startPos) const override;
     void printClassName() const override;
-    void waitEnterKey() const override;
 private:
     // ncurses wrapper
 };
