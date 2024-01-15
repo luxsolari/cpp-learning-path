@@ -9,7 +9,12 @@ int main() {
     // set locale
     setlocale(LC_ALL, "C/UTF-8/C/C/C/C");
 
-    initscr(); // Initialize ncurses
+    initscr();  // Initialize curses mode
+    start_color();  // Enable color support if needed
+    raw();  // Disable line buffering
+    keypad(stdscr, TRUE);  // Enable special keys
+    noecho();  // Don't display pressed keys
+
     // draw border around screen
     box(stdscr, 0, 0);
 
