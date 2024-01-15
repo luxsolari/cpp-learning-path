@@ -1,8 +1,12 @@
 #include <clocale>
 #include <iostream>
+#ifdef UNIX_PLATFORM
 #include <ncurses.h>
+#endif
 
 int main() {
+
+#ifdef UNIX_PLATFORM
     // get terminal type
     char *termType = getenv("TERM");
     std::cout << "Terminal type: " << termType << std::endl;
@@ -38,6 +42,7 @@ int main() {
 
     // end ncurses
     endwin();
+#endif
 
     return 0;
 }
