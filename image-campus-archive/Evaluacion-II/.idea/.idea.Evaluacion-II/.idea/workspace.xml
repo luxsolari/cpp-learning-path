@@ -5,21 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a02da4b6-e328-431e-8ea6-389b4652630e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Evaluacion-II/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evaluacion-II/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Evaluacion-II/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evaluacion-II/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Champions/Champion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Champions/Champion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Champions/Skill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Champions/Skill.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Items/Armor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Items/Armor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Items/Consumable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Items/Consumable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Items/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Items/Item.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Items/Weapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Items/Weapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evaluacion-II/Utils/FileUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Evaluacion-II/Utils/FileUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/Program.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/Program.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/managers/factory/GameManagerFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/managers/factory/GameManagerFactory.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/managers/impl/UnixGameManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/managers/impl/UnixGameManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/Input.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/Input.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/Input.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/Input.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/UnixConsole.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/UnixConsole.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/UnixConsole.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/UnixConsole.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/WindowsInput.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/WindowsInput.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/WindowsInput.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../random-games-archive/Cards/src/utils/io/impl/WindowsInput.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7a1ad32abaee44480b66c2c1fcee9628cca92a4cd272eced5781564201180/Number.Parsing.cs" root0="SKIP_HIGHLIGHTING" />
@@ -28,20 +30,25 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
   <component name="ProjectId" id="2BsA8AHXZ4RKkvV7dkjATfwdE6G" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Evaluacion-II" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Evaluacion-II/bin/Debug/net6.0/Evaluacion-II.exe" />
@@ -72,6 +79,7 @@
       <updated>1657684258402</updated>
       <workItem from="1657684282798" duration="4030000" />
       <workItem from="1657689063032" duration="1140000" />
+      <workItem from="1705430687757" duration="5000" />
     </task>
     <servers />
   </component>

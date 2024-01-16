@@ -69,12 +69,12 @@ public:
 };
 #endif //UNIX_PLATFORM
 
-class Console {
+class Output {
 public:
-    virtual ~Console() = default;
+    virtual ~Output() = default;
 
     // Virtual methods to be implemented by derived classes
-    virtual const class Console* getAddress() const = 0;
+    virtual const class Output* getAddress() const = 0;
     virtual std::vector<int> getConsoleSize() const = 0;
     virtual std::vector<int> getCursorPosition() const = 0;
     virtual void printToConsole(const char *format, ...) const = 0;

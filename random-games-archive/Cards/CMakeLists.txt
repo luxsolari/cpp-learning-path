@@ -30,27 +30,21 @@ endif()
 
 # Add your source files
 set(SOURCE_FILES src/Program.cpp
-        src/utils/io/impl/WindowsConsole.cpp
-        src/utils/io/impl/WindowsConsole.h
+        src/utils/io/impl/WindowsOutput.cpp
+        src/utils/io/impl/WindowsOutput.h
         src/enums/Suits.h
-        src/utils/io/Console.h
-        src/utils/factory/ConsoleFactory.cpp
-        src/utils/factory/ConsoleFactory.h
-        src/utils/io/impl/UnixConsole.cpp
-        src/utils/io/impl/UnixConsole.h
-        src/managers/GameManager.cpp
-        src/managers/GameManager.h
-        src/managers/impl/WindowsGameManager.cpp
-        src/managers/impl/WindowsGameManager.h
-        src/managers/impl/UnixGameManager.cpp
-        src/managers/impl/UnixGameManager.h
-        src/managers/factory/GameManagerFactory.cpp
-        src/managers/factory/GameManagerFactory.h
+        src/utils/io/Output.h
+        src/utils/factory/OutputFactory.cpp
+        src/utils/factory/OutputFactory.h
+        src/utils/io/impl/UnixOutput.cpp
+        src/utils/io/impl/UnixOutput.h
         src/utils/io/Input.cpp
         src/utils/io/Input.h
         src/utils/io/impl/WindowsInput.cpp
         src/utils/io/impl/WindowsInput.h
-        src/utils/io/Console.cpp
+        src/utils/io/Output.cpp
+        src/utils/factory/InputFactory.cpp
+        src/utils/factory/InputFactory.h
 )
 
 # Define your target

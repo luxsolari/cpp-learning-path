@@ -1,159 +1,58 @@
-/*
-
 #ifdef UNIX_PLATFORM
 #include <ncurses.h>
+#include <ios>
 #endif
-
 #include <iostream>
 #include <thread>
-#include "Utils/ConsoleFactory.h"
-
-int main() {
+#include "utils/factory/OutputFactory.h"
 
 #ifdef UNIX_PLATFORM
-    // get terminal type
-    char *termType = getenv("TERM");
-    std::cout << "Terminal type: " << termType << std::endl;
-    // set locale
+int main() {
     setlocale(LC_ALL, "C/UTF-8/C/C/C/C");
-
-    initscr();  // Initialize curses mode
-    start_color();  // Enable color support if needed
-    raw();  // Disable line buffering
-    keypad(stdscr, TRUE);  // Enable special keys
-    noecho();  // Don't display pressed keys
-
-    // draw border around screen
-    box(stdscr, 0, 0);
-
-    // set invisible cursor
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
     curs_set(0);
 
-    // get screen size
-    int x{0};
-    int y{0};
-    getmaxyx(stdscr, y, x);
-    std::string message = "Hello, world!";
+    int height, width, start_y, start_x;
+    height = 6;
+    width = 8;
+    start_y = start_x = 10;
 
-    // print on center of screen
-    mvprintw(y / 2, (x / 2) - (message.length() / 2), "Hello, world!");
-    mvprintw(y / 2, (x / 2) - (message.length() / 2), "  ♠︎ ♣︎ ♥︎ ♦︎  ");
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_BLACK, COLOR_WHITE);
 
-    // refresh screen
+    WINDOW* CARD = newwin(height, width, start_y, start_x);
+    wbkgd(CARD, COLOR_PAIR(1));
     refresh();
-    // wait for enter key
-    std::wcin.get();
+    box(CARD, 0, 0);
 
-    // end ncurses
+    const std::string SPADE = "\u2660";
+    const std::string CLUB = "\u2663";
+    const std::string HEART = "\u2665";
+    const std::string DIAMOND = "\u2666";
+
+    mvwprintw(CARD, 1, 3, "%s", SPADE.c_str());
+    mvwprintw(CARD, 1, 1, "10");
+    wrefresh(CARD);
+
+    getch();
     endwin();
-#endif
-
-    Console* console = ConsoleFactory::createConsole();
-
-    console->drawSquareBorder(console->getWidth(), console->getHeight() - 1, {0, 0});
-    std::string message = "Console Test";
-    console->printToConsoleAtLocation(console->getHeight() / 2,
-                                      (console->getWidth() / 2) - (int)message.length() / 2,
-                                      message.c_str());
-
-    std::cin.get();
     return 0;
 }
-*/
+#endif
 
-#include <iostream>
-#include <unordered_map>
+
+#ifdef WINDOWS_PLATFORM
 #include <Windows.h>
-#include <thread>
 #include <chrono>
-#include <mutex>
 #include <vector>
+#include "utils/io/Input.h"
+#include "utils/factory/InputFactory.h"
 
-class InputManager {
-public:
-    InputManager();
-    ~InputManager();
-    void Start();
-    void Stop();
-    void InputThreadFunction();
-    void Update();
-    bool IsKeyDown(int key);
-    bool IsKeyPressed(int key);
-    bool IsKeyReleased(int key);
-
-private:
-    std::unordered_map<int, bool> keyStates;
-    std::unordered_map<int, bool> prevKeyStates;
-    bool running;
-    std::thread inputThread;
-    mutable std::mutex inputMutex;
-
-    void LockInput() const {
-        inputMutex.lock();
-    }
-
-    void UnlockInput() const {
-        inputMutex.unlock();
-    }
-};
-
-InputManager::InputManager() : running(true) {
-}
-
-InputManager::~InputManager() {
-    Stop();  // Ensure the input thread is stopped before exiting
-}
-
-void InputManager::Start() {
-    inputThread = std::thread(&InputManager::InputThreadFunction, this);
-}
-
-void InputManager::Stop() {
-    running = false;
-    if (inputThread.joinable()) {
-        inputThread.join();
-    }
-}
-
-void InputManager::InputThreadFunction() {
-    while (running) {
-        Update();
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));  // Adjust as needed
-    }
-}
-
-void InputManager::Update() {
-    LockInput();  // Lock the mutex before accessing shared data
-
-    prevKeyStates = keyStates;
-
-    for (int key = 0; key < 256; ++key) {
-        keyStates[key] = GetAsyncKeyState(key) & 0x8000;
-    }
-
-    UnlockInput();  // Unlock the mutex after updating shared data
-}
-
-bool InputManager::IsKeyDown(int key) {
-    LockInput();
-    bool result = keyStates.find(key) != keyStates.end() && keyStates.at(key);
-    UnlockInput();
-    return result;
-}
-
-bool InputManager::IsKeyPressed(int key) {
-    LockInput();
-    bool result = keyStates.find(key) != keyStates.end() && !prevKeyStates[key] && keyStates[key];
-    UnlockInput();
-    return result;
-}
-
-bool InputManager::IsKeyReleased(int key) {
-    LockInput();
-    bool result = keyStates.find(key) != keyStates.end() && prevKeyStates[key] && !keyStates[key];
-    UnlockInput();
-    return result;
-}
+#pragma execution_character_set( "utf-8" )
 
 enum class MenuOrientation {
     Vertical,
@@ -162,10 +61,12 @@ enum class MenuOrientation {
 
 class ConsoleMenu {
 public:
-    ConsoleMenu(const std::vector<std::string>& options, MenuOrientation orientation);
+    ConsoleMenu(const std::vector<std::string>& options, MenuOrientation orientation, Input* inputManager, Output* console);
     void Run();
 
 private:
+    Input* inputManager;
+    Output* console;
     std::vector<std::string> menuOptions;
     size_t selectedOption;
     MenuOrientation orientation;
@@ -173,8 +74,8 @@ private:
     void DisplayMenu() const;
 };
 
-ConsoleMenu::ConsoleMenu(const std::vector<std::string>& options, MenuOrientation orientation)
-        : menuOptions(options), selectedOption(0), orientation(orientation) {
+ConsoleMenu::ConsoleMenu(const std::vector<std::string>& options, MenuOrientation orientation, Input* inputManager, Output* console)
+        : menuOptions(options), selectedOption(0), orientation(orientation), inputManager(inputManager), console(console) {
 }
 
 void SetConsoleTextAttribute(WORD attributes) {
@@ -182,11 +83,10 @@ void SetConsoleTextAttribute(WORD attributes) {
 }
 
 void ConsoleMenu::DisplayMenu() const {
-    system("cls");  // Clear the console (Windows-specific, use "clear" for Unix)
-
     std::cout << "Select an option:\n";
 
     for (size_t i = 0; i < menuOptions.size(); ++i) {
+        // Set the text color to red if the option is selected
         if (i == selectedOption) {
             SetConsoleTextAttribute(FOREGROUND_INTENSITY | FOREGROUND_RED |
                                               BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN);  // Highlighted text color
@@ -194,67 +94,90 @@ void ConsoleMenu::DisplayMenu() const {
 
         std::cout << menuOptions[i];
 
+        if (i == selectedOption) {
+            SetConsoleTextAttribute(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);  // Reset text color
+        }
+
         if (orientation == MenuOrientation::Vertical) {
             std::cout << "\n";
         } else if (i < menuOptions.size() - 1) {
             std::cout << "   ";  // Space between horizontal options
         }
 
-        if (i == selectedOption) {
-            SetConsoleTextAttribute(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);  // Reset text color
-        }
     }
 }
 
 void ConsoleMenu::Run() {
-    InputManager inputManager;
-
-    inputManager.Start();
-
     while (true) {
+        console->clearScreen();
         DisplayMenu();
-
         if (orientation == MenuOrientation::Vertical) {
-            if (inputManager.IsKeyPressed(VK_DOWN) && selectedOption < menuOptions.size() - 1) {
+            if (inputManager->IsKeyPressed(VK_DOWN) && selectedOption < menuOptions.size() - 1) {
                 ++selectedOption;
             }
 
-            if (inputManager.IsKeyPressed(VK_UP) && selectedOption > 0) {
+            if (inputManager->IsKeyPressed(VK_UP) && selectedOption > 0) {
                 --selectedOption;
             }
         } else {
-            if (inputManager.IsKeyPressed(VK_RIGHT) && selectedOption < menuOptions.size() - 1) {
+            if (inputManager->IsKeyPressed(VK_RIGHT) && selectedOption < menuOptions.size() - 1) {
                 ++selectedOption;
             }
 
-            if (inputManager.IsKeyPressed(VK_LEFT) && selectedOption > 0) {
+            if (inputManager->IsKeyPressed(VK_LEFT) && selectedOption > 0) {
                 --selectedOption;
             }
         }
 
-        if (inputManager.IsKeyPressed(VK_RETURN)) {
+        if (inputManager->IsKeyPressed(VK_RETURN)) {
             // Process the selected option
+            if (orientation == MenuOrientation::Vertical) {
+                console->moveCursorDown(2);
+            } else {
+                console->moveCursorDown(2);
+                console->returnCarriage();
+            }
             std::cout << "You selected: " << menuOptions[selectedOption] << "\n";
             break;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(50));  // Adjust as needed
     }
-
-    inputManager.Stop();  // Stop the input thread before exiting
 }
 
 int main() {
-    std::vector<std::string> options = {"Option 1", "Option 2", "Option 3"};
+    SetConsoleOutputCP( 65001 );
+    Input* inputManager = InputFactory::createInput();
+    Output* console = OutputFactory::createConsole();
 
-    ConsoleMenu verticalMenu(options, MenuOrientation::Vertical);
-    ConsoleMenu horizontalMenu(options, MenuOrientation::Horizontal);
+    std::string greeting = "UI Menu Test! \033[31m\u2660 \u2663 \u2665 \u2666";
 
-    std::cout << "Vertical Menu:\n";
+    int maxConsoleX = console->getConsoleSize().at(0);
+    int maxConsoleY = console->getConsoleSize().at(1);
+
+    console->drawSquareBorder(maxConsoleX, maxConsoleY - 1, {0, 0});
+    console->printToConsoleAtLocation( maxConsoleY / 2,
+                                       (maxConsoleX / 2) - static_cast<int>(greeting.length() / 2),
+                                       greeting.c_str());
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));  // Adjust as needed
+
+    inputManager->Start();
+    std::vector<std::string> options = {"Spade \u2660", "Club \u2663", "Heart \u2665", "Diamond \u2666"};
+
+    ConsoleMenu verticalMenu(options, MenuOrientation::Horizontal, inputManager, console);
+    std::cout << "Horizontal Menu:\n";
     verticalMenu.Run();
 
-    std::cout << "\nHorizontal Menu:\n";
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));  // Adjust as needed
+
+    ConsoleMenu horizontalMenu(options, MenuOrientation::Vertical, inputManager, console);
+    std::cout << "\nVertical Menu:\n";
+
     horizontalMenu.Run();
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));  // Adjust as needed
+    inputManager->Stop();
     return 0;
 }
+#endif

@@ -1,25 +1,25 @@
 //
-// Created by luxsolari on 09/01/2024.
+// Created by Lux Solari on 12/01/2024.
 //
-#ifdef WINDOWS_PLATFORM
-#ifndef CARDS_GAMEWIN_H
-#define CARDS_GAMEWIN_H
-#include <vector>
-#include "../Console.h"
 
-class WindowsConsole : public Console {
+#ifdef UNIX_PLATFORM
+#ifndef CARDS_UNIXCONSOLE_H
+#define CARDS_UNIXCONSOLE_H
+#include "../Output.h"
+
+class UnixOutput : public Output {
 public:
-    // Singleton
-    WindowsConsole() = default;
-    ~WindowsConsole() override = default;
-    WindowsConsole(const WindowsConsole&) = delete;
-    WindowsConsole(WindowsConsole&&) = delete;
-    WindowsConsole& operator=(const WindowsConsole&) = delete;
-    WindowsConsole& operator=(WindowsConsole&&) = delete;
-    static WindowsConsole* getInstance();
+// Singleton
+    UnixOutput() = default;
+    ~UnixOutput() override = default;
+    UnixOutput(const UnixOutput&) = delete;
+    UnixOutput(UnixOutput&&) = delete;
+    UnixOutput& operator=(const UnixOutput&) = delete;
+    UnixOutput& operator=(UnixOutput&&) = delete;
+    static UnixOutput* getInstance();
 
     // Methods
-    const WindowsConsole* getAddress() const override;
+    const UnixOutput* getAddress() const override;
     std::vector<int> getConsoleSize() const override;
     std::vector<int> getCursorPosition() const override;
     void printToConsole(const char *format, ...) const override;
@@ -36,9 +36,9 @@ public:
     void clearScreen() const override;
     void drawSquareBorder(int width, int height, std::vector<int> startPos) const override;
     void printClassName() const override;
-
+private:
+    // ncurses wrapper
 };
 
-
-#endif //CARDS_GAMEWIN_H
-#endif //WINDOWS_PLATFORM
+#endif //CARDS_UNIXCONSOLE_H
+#endif //UNIX_PLATFORM

@@ -10,10 +10,10 @@
 #include <conio.h>
 #include <thread>
 #include <chrono>
-#include "WindowsConsole.h"
+#include "WindowsOutput.h"
 
-WindowsConsole* WindowsConsole::getInstance() {
-    static WindowsConsole instance;
+WindowsOutput* WindowsOutput::getInstance() {
+    static WindowsOutput instance;
     // initialize variables here
     instance.m_isActive = true;
 
@@ -33,15 +33,15 @@ WindowsConsole* WindowsConsole::getInstance() {
     return &instance;
 }
 
-const WindowsConsole* WindowsConsole::getAddress() const {
+const WindowsOutput* WindowsOutput::getAddress() const {
     return this;
 }
 
-void WindowsConsole::printClassName() const {
-    std::cout << "WindowsConsole" << std::endl;
+void WindowsOutput::printClassName() const {
+    std::cout << "WindowsOutput" << std::endl;
 }
 
-std::vector<int> WindowsConsole::getConsoleSize() const {
+std::vector<int> WindowsOutput::getConsoleSize() const {
     // Get console window size
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -54,7 +54,7 @@ std::vector<int> WindowsConsole::getConsoleSize() const {
 // startPos is a vector with two elements: the x and y coordinates of the start position.
 // The border is drawn using unicode characters. The console is set to UTF-16 mode to print unicode characters.
 // The console is returned to ANSI mode after the border is drawn.
-void WindowsConsole::drawSquareBorder(int width, int height, std::vector<int> startPos) const {
+void WindowsOutput::drawSquareBorder(int width, int height, std::vector<int> startPos) const {
     // ASCII Symbols for borders
     const std::wstring TOP_LEFT_CORNER   = L"\u250C";
     const std::wstring TOP_RIGHT_CORNER  = L"\u2510";
@@ -98,7 +98,7 @@ void WindowsConsole::drawSquareBorder(int width, int height, std::vector<int> st
 }
 
 
-void WindowsConsole::setConsoleSize(int width, int height) const {
+void WindowsOutput::setConsoleSize(int width, int height) const {
     // Set console window size
     SMALL_RECT windowSize = {0, 0, static_cast<SHORT>(width), static_cast<SHORT>(height)};
     SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &windowSize);
@@ -115,13 +115,13 @@ void WindowsConsole::setConsoleSize(int width, int height) const {
 
 }
 
-void WindowsConsole::setCursorPosition(int x, int y) const {
+void WindowsOutput::setCursorPosition(int x, int y) const {
     // Set cursor position
     COORD coord = {static_cast<SHORT>(x), static_cast<SHORT>(y)};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void WindowsConsole::moveCursorUp(int steps) const {
+void WindowsOutput::moveCursorUp(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -130,7 +130,7 @@ void WindowsConsole::moveCursorUp(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void WindowsConsole::moveCursorDown(int steps) const {
+void WindowsOutput::moveCursorDown(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -139,7 +139,7 @@ void WindowsConsole::moveCursorDown(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void WindowsConsole::moveCursorLeft(int steps) const {
+void WindowsOutput::moveCursorLeft(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -148,7 +148,7 @@ void WindowsConsole::moveCursorLeft(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void WindowsConsole::moveCursorRight(int steps) const {
+void WindowsOutput::moveCursorRight(int steps) const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -157,29 +157,25 @@ void WindowsConsole::moveCursorRight(int steps) const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void WindowsConsole::returnCursorToStart() const {
+void WindowsOutput::returnCursorToStart() const {
     // Set cursor position
     COORD coord = {0, 0};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void WindowsConsole::clearScreen() const {
+void WindowsOutput::clearScreen() const {
     // Get console window size
     std::vector<int> consoleSize = getConsoleSize();
     int width = consoleSize.at(0);
     int height = consoleSize.at(1);
     // Clear screen
-    for (int i = 0; i < height; ++i) {
-        setCursorPosition(0, i);
-        for (int j = 0; j < width; ++j) {
-            std::cout << " ";
-        }
-    }
+    system("cls"); // Windows only command to clear screen.
+                             // This is faster than using SetConsoleCursorPosition, but it is not portable.
     // Return cursor to start
     returnCursorToStart();
 }
 
-void WindowsConsole::returnCarriage() const {
+void WindowsOutput::returnCarriage() const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
@@ -188,14 +184,14 @@ void WindowsConsole::returnCarriage() const {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-std::vector<int> WindowsConsole::getCursorPosition() const {
+std::vector<int> WindowsOutput::getCursorPosition() const {
     // Get current cursor position
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     return std::vector<int>{csbi.dwCursorPosition.X, csbi.dwCursorPosition.Y};
 }
 
-void WindowsConsole::printToConsole(const char *format, ...) const {
+void WindowsOutput::printToConsole(const char *format, ...) const {
     // print to console window (Windows only)
     va_list args;
     va_start(args, format);
@@ -203,7 +199,7 @@ void WindowsConsole::printToConsole(const char *format, ...) const {
     va_end(args);
 }
 
-void WindowsConsole::printToConsoleWide(const wchar_t *format, ...) const {
+void WindowsOutput::printToConsoleWide(const wchar_t *format, ...) const {
     // print with wide chars to console window (Windows only)
     _setmode(_fileno(stdout), _O_U16TEXT);
     va_list args;
@@ -214,7 +210,7 @@ void WindowsConsole::printToConsoleWide(const wchar_t *format, ...) const {
     _setmode(_fileno(stdout), _O_TEXT);
 }
 
-void WindowsConsole::printToConsoleAtLocation(int y, int x, const char *format, ...) const {
+void WindowsOutput::printToConsoleAtLocation(int y, int x, const char *format, ...) const {
     // Set cursor position
     setCursorPosition(x, y);
     // print to console window (Windows only)
