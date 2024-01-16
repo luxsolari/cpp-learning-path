@@ -1,92 +1,43 @@
-#include <stdio.h>
 #include <ncurses.h>
+#include <ios>
 
-#define WIDTH 30
-#define HEIGHT 10
-
-int startx = 0;
-int starty = 0;
-
-char *choices[] = {
-        "Choice 1",
-        "Choice 2",
-        "Choice 3",
-        "Choice 4",
-        "Choice 5",
-        "Exit",
-};
-int n_choices = sizeof(choices) / sizeof(char *);
-void print_menu(WINDOW *menu_win, int highlight);
-
-int main()
-{	WINDOW *menu_win;
-    int highlight = 1;
-    int choice = 0;
-    int c;
-
+int main() {
+    setlocale(LC_ALL, "C/UTF-8/C/C/C/C");
     initscr();
-    clear();
-    noecho();
-    cbreak();	/* Line buffering disabled. pass on everything */
-    startx = (80 - WIDTH) / 2;
-    starty = (24 - HEIGHT) / 2;
+    cbreak(); // disable line buffering
+    noecho(); // disable echoing
+    //raw(); // disable line buffering and ctrl+c
+    keypad(stdscr, TRUE); // enable function keys
+    curs_set(0); // disable cursor
+    int height, width, start_y, start_x;
+    height = 6;
+    width = 8;
+    start_y = start_x = 10;
 
-    menu_win = newwin(HEIGHT, WIDTH, starty, startx);
-    keypad(menu_win, TRUE);
-    mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
+    // init color pairs
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_BLACK, COLOR_WHITE);
+    WINDOW* CARD = newwin(height, width, start_y, start_x);
+    wbkgd(CARD, COLOR_PAIR(2));
     refresh();
-    print_menu(menu_win, highlight);
-    while(1)
-    {	c = wgetch(menu_win);
-        switch(c)
-        {	case KEY_UP:
-                if(highlight == 1)
-                    highlight = n_choices;
-                else
-                    --highlight;
-                break;
-            case KEY_DOWN:
-                if(highlight == n_choices)
-                    highlight = 1;
-                else
-                    ++highlight;
-                break;
-            case 10:
-                choice = highlight;
-                break;
-            default:
-                mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", c, c);
-                refresh();
-                break;
-        }
-        print_menu(menu_win, highlight);
-        if(choice != 0)	/* User did a choice come out of the infinite loop */
-            break;
-    }
-    mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
-    clrtoeol();
-    refresh();
+
+    box(CARD, 0,0);
+
+    // card suit symbols (unicode)
+    // Define card suits symbols glyphs for *nix, full width unicode characters
+    const std::string SPADE = "\u2660";
+    const std::string CLUB = "\u2663";
+    const std::string HEART = "\u2665";
+    const std::string DIAMOND = "\u2666";
+
+    mvwprintw(CARD, 1, 3, "%s", SPADE.c_str());
+    mvwprintw(CARD, 1, 1, "10");
+    mvwprintw(CARD, 4, 6, "%s", SPADE.c_str());
+    mvwprintw(CARD, 4, 4, "10");
+    wrefresh(CARD);
+
+    getch();
     endwin();
     return 0;
-}
-
-
-void print_menu(WINDOW *menu_win, int highlight)
-{
-    int x, y, i;
-
-    x = 2;
-    y = 2;
-    box(menu_win, 0, 0);
-    for(i = 0; i < n_choices; ++i)
-    {	if(highlight == i + 1) /* High light the present choice */
-        {	wattron(menu_win, A_REVERSE);
-            mvwprintw(menu_win, y, x, "%s", choices[i]);
-            wattroff(menu_win, A_REVERSE);
-        }
-        else
-            mvwprintw(menu_win, y, x, "%s", choices[i]);
-        ++y;
-    }
-    wrefresh(menu_win);
 }
