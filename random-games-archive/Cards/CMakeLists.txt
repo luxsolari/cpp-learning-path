@@ -126,8 +126,6 @@ elseif (CMAKE_HOST_APPLE)
     find_package(Curses REQUIRED)
     target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
-    # pass compiler flags for ncurses
-    target_compile_options(Cards PRIVATE -lncurses)
 
 # Other Unix-like systems (including WSL)
 elseif (CMAKE_HOST_UNIX)

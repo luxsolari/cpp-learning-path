@@ -4,6 +4,7 @@
 
 #include "GameManagerFactory.h"
 #include "../impl/WindowsGameManager.h"
+#include "../impl/UnixGameManager.h"
 
 GameManager *GameManagerFactory::createGameManager() {
 #ifdef UNIX_PLATFORM

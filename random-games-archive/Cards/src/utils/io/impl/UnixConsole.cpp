@@ -6,8 +6,8 @@
 #include <iostream>
 #include "UnixConsole.h"
 
-const UnixConsole *UnixConsole::getInstance() {
-    static const UnixConsole instance;
+UnixConsole* UnixConsole::getInstance() {
+    static UnixConsole instance;
     return &instance;
 }
 

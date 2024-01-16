@@ -5,7 +5,7 @@
 #ifdef UNIX_PLATFORM
 #ifndef CARDS_UNIXCONSOLE_H
 #define CARDS_UNIXCONSOLE_H
-#include "Console.h"
+#include "../Console.h"
 
 class UnixConsole : public Console {
 public:
@@ -16,7 +16,7 @@ public:
     UnixConsole(UnixConsole&&) = delete;
     UnixConsole& operator=(const UnixConsole&) = delete;
     UnixConsole& operator=(UnixConsole&&) = delete;
-    static const UnixConsole* getInstance();
+    static UnixConsole* getInstance();
 
     // Methods
     const UnixConsole* getAddress() const override;
