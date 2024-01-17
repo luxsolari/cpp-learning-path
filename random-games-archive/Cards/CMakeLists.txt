@@ -73,7 +73,13 @@ if(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     #        COMPILE_OPTIONS "/FAs"        # Generate assembly listing
     #        VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")  # Set working directory for debugging
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1 PDC_WIDE=1)
+    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1 PDC_WIDE=1 MSVC_COMPILER=1)
+    # Pass debug macro to the compiler if in debug mode, otherwise pass release macro
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+        target_compile_definitions(Cards PRIVATE DEBUG=1)
+    else ()
+        target_compile_definitions(Cards PRIVATE RELEASE=1)
+    endif()
 
 # Windows on MinGW
 elseif(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
@@ -84,7 +90,17 @@ elseif(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     #        COMPILE_OPTIONS "-S"        # Generate assembly listing
     #        VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")  # Set working directory for debugging
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1 PDC_WIDE=1)
+    target_compile_definitions(Cards PRIVATE WINDOWS_PLATFORM=1 PDC_WIDE=1 MINGW_COMPILER=1)
+
+    # Pass debug macro to the compiler if in debug mode, otherwise pass release macro
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+        target_compile_definitions(Cards PRIVATE DEBUG=1)
+    else ()
+        target_compile_definitions(Cards PRIVATE RELEASE=1)
+    endif()
+
+    include_directories(${CMAKE_SOURCE_DIR}/lib/pdcurses)
+    target_link_libraries(Cards PRIVATE ${CMAKE_SOURCE_DIR}/lib/pdcurses/wincon/pdcurses.a)
 
 # Linux on GCC or Clang
 elseif (CMAKE_HOST_LINUX)
@@ -97,10 +113,17 @@ elseif (CMAKE_HOST_LINUX)
             LINK_FLAGS "-Wl,-Map=${OUTPUT_PATH}/main.map")               # Generate a map file
 
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
+    target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1 PDC_WIDE=1)
     find_package(Curses REQUIRED)
     target_link_libraries(Cards PRIVATE -lncursesw)
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
+
+    # Pass debug macro to the compiler if in debug mode, otherwise pass release macro
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+        target_compile_definitions(Cards PRIVATE DEBUG=1)
+    else ()
+        target_compile_definitions(Cards PRIVATE RELEASE=1)
+    endif()
 
 # Apple on Clang or GCC
 elseif (CMAKE_HOST_APPLE)
@@ -122,6 +145,13 @@ elseif (CMAKE_HOST_APPLE)
     # pass compiler flags for ncurses
     target_compile_options(Cards PRIVATE -lncurses)
 
+    # Pass debug macro to the compiler if in debug mode, otherwise pass release macro
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+        target_compile_definitions(Cards PRIVATE DEBUG=1)
+    else ()
+        target_compile_definitions(Cards PRIVATE RELEASE=1)
+    endif()
+
 # Other Unix-like systems (including WSL)
 elseif (CMAKE_HOST_UNIX)
     message("Unix-specific configurations...")
@@ -133,12 +163,18 @@ elseif (CMAKE_HOST_UNIX)
             LINK_FLAGS "-Wl,-Map=${OUTPUT_PATH}/main.map")               # Generate a map file
 
     # Pass a preprocessor macro to the compiler
-    target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
+    target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1 )
 
     find_package(Curses REQUIRED)
     target_link_libraries(Cards PRIVATE -lncursesw)
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
 
+    # Pass debug macro to the compiler if in debug mode, otherwise pass release macro
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+        target_compile_definitions(Cards PRIVATE DEBUG=1)
+    else ()
+        target_compile_definitions(Cards PRIVATE RELEASE=1)
+    endif()
 
     # Other systems (not supported)
 else()
