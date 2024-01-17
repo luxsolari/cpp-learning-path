@@ -8,33 +8,30 @@
 
 #ifdef UNIX_PLATFORM
 int main() {
-    setlocale(LC_ALL, "C/UTF-8/C/C/C/C");
+    setlocale(LC_ALL, "");
     initscr();
-    cbreak();
+    raw();
     noecho();
     keypad(stdscr, TRUE);
-    curs_set(0);
+    start_color();
+    curs_set(FALSE);
+    set_escdelay(0);
 
     int height, width, start_y, start_x;
     height = 6;
     width = 8;
     start_y = start_x = 10;
 
-    start_color();
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
 
     WINDOW* CARD = newwin(height, width, start_y, start_x);
-    wbkgd(CARD, COLOR_PAIR(1));
     refresh();
     box(CARD, 0, 0);
 
-    const std::string SPADE = "\u2660";
-    const std::string CLUB = "\u2663";
-    const std::string HEART = "\u2665";
-    const std::string DIAMOND = "\u2666";
+    static const char *card_suits[4] = {"\u2666", "\u2660", "\u2665", "\u2663"};
 
-    mvwprintw(CARD, 1, 3, "%s", SPADE.c_str());
+    mvwprintw(CARD, 1, 3, "%s", card_suits[1]);
     mvwprintw(CARD, 1, 1, "10");
     wrefresh(CARD);
 

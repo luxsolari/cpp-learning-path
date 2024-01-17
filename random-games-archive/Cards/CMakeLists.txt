@@ -98,9 +98,8 @@ elseif (CMAKE_HOST_LINUX)
 
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
-
     find_package(Curses REQUIRED)
-    target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
+    target_link_libraries(Cards PRIVATE -lncursesw)
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
 
 # Apple on Clang or GCC
@@ -127,16 +126,21 @@ elseif (CMAKE_HOST_APPLE)
 elseif (CMAKE_HOST_UNIX)
     message("Unix-specific configurations...")
 
+    SET(CMAKE_ASM_FLAGS "${CFLAGS} -x assembler-with-cpp")
+    # Set the output path for the assembly listing
+    set_target_properties(Cards PROPERTIES
+            COMPILE_OPTIONS "-Wa,-adhln=${ASSEMBLY_LISTING_FILE}"        # Generate assembly listing
+            LINK_FLAGS "-Wl,-Map=${OUTPUT_PATH}/main.map")               # Generate a map file
+
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1)
 
-    # pass compiler flags for ncurses
-    target_compile_options(Cards PRIVATE -lncurses)
+    find_package(Curses REQUIRED)
+    target_link_libraries(Cards PRIVATE -lncursesw)
+    target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
 
-    # Link against ncurses library
-    target_link_libraries(Cards PRIVATE ncurses)
 
-# Other systems (not supported)
+    # Other systems (not supported)
 else()
     # Other compiler configurations
     message("Other compiler configurations are not supported.")
