@@ -8,7 +8,7 @@
 
 #ifdef UNIX_PLATFORM
 int main() {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "C/UTF-8/C/C/C/C");
     initscr();
     raw();
     noecho();
@@ -25,15 +25,40 @@ int main() {
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
 
-    WINDOW* CARD = newwin(height, width, start_y, start_x);
+    WINDOW* CARD1 = newwin(height, width, start_y, start_x);
+    WINDOW* CARD2 = newwin(height, width, start_y, start_x * 2);
+    WINDOW* CARD3 = newwin(height, width, start_y, start_x * 3);
+    WINDOW* CARD4 = newwin(height, width, start_y, start_x * 4);
+    WINDOW* CARD5 = newwin(height, width, start_y, start_x * 5);
+
     refresh();
-    box(CARD, 0, 0);
+    box(CARD1, 0, 0);
+    box(CARD2, 0, 0);
+    box(CARD3, 0, 0);
+    box(CARD4, 0, 0);
+    box(CARD5, 0, 0);
 
     static const char *card_suits[4] = {"\u2666", "\u2660", "\u2665", "\u2663"};
 
-    mvwprintw(CARD, 1, 3, "%s", card_suits[1]);
-    mvwprintw(CARD, 1, 1, "10");
-    wrefresh(CARD);
+    mvwprintw(CARD1, 1, 3, "%s", card_suits[1]);
+    mvwprintw(CARD1, 1, 1, "10");
+    wrefresh(CARD1);
+
+    mvwprintw(CARD2, 1, 3, "%s", card_suits[2]);
+    mvwprintw(CARD2, 1, 1, "J");
+    wrefresh(CARD2);
+
+    mvwprintw(CARD3, 1, 3, "%s", card_suits[3]);
+    mvwprintw(CARD3, 1, 1, "Q");
+    wrefresh(CARD3);
+
+    mvwprintw(CARD4, 1, 3, "%s", card_suits[0]);
+    mvwprintw(CARD4, 1, 1, "K");
+    wrefresh(CARD4);
+
+    mvwprintw(CARD5, 1, 3, "%s", card_suits[1]);
+    mvwprintw(CARD5, 1, 1, "A");
+    wrefresh(CARD5);
 
     getch();
     endwin();
