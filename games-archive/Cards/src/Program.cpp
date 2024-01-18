@@ -8,7 +8,7 @@
 
 #ifdef UNIX_PLATFORM
 int main() {
-    setlocale(LC_ALL, "C/UTF-8/C/C/C/C");
+    setlocale(LC_ALL, "");
     initscr();
     raw();
     noecho();

@@ -81,6 +81,9 @@ if(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
         target_compile_definitions(Cards PRIVATE RELEASE=1)
     endif()
 
+    find_package(unofficial-pdcurses CONFIG REQUIRED)
+    target_link_libraries(Cards PRIVATE unofficial::pdcurses::pdcurses)
+
 # Windows on MinGW
 elseif(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     message("MinGW-specific configurations...")
@@ -99,8 +102,8 @@ elseif(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         target_compile_definitions(Cards PRIVATE RELEASE=1)
     endif()
 
-    include_directories(${CMAKE_SOURCE_DIR}/lib/pdcurses)
-    target_link_libraries(Cards PRIVATE ${CMAKE_SOURCE_DIR}/lib/pdcurses/wincon/pdcurses.a)
+    find_package(unofficial-pdcurses CONFIG REQUIRED)
+    target_link_libraries(Cards PRIVATE unofficial::pdcurses::pdcurses)
 
 # Linux on GCC or Clang
 elseif (CMAKE_HOST_LINUX)
