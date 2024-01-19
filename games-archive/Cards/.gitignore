@@ -613,6 +613,11 @@ FodyWeavers.xsd
 
 /.idea
 
+# vcpkg package manager
+vcpkg_installed/
+vcpkg.json
+vcpkg.lock
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
