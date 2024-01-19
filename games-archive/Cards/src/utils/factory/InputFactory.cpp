@@ -4,11 +4,12 @@
 
 #include "InputFactory.h"
 #include "../io/impl/WindowsInput.h"
+#include "../io/impl/UnixInput.h"
 
 Input *InputFactory::createInput() {
 #ifdef WINDOWS_PLATFORM
     return WindowsInput::GetInstance();
 #else
-    return nullptr;
+    return UnixInput::getInstance();
 #endif
 }

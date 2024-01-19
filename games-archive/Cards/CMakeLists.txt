@@ -45,6 +45,8 @@ set(SOURCE_FILES src/Program.cpp
         src/utils/io/Output.cpp
         src/utils/factory/InputFactory.cpp
         src/utils/factory/InputFactory.h
+        src/utils/io/impl/UnixInput.cpp
+        src/utils/io/impl/UnixInput.h
 )
 
 # Define your target
