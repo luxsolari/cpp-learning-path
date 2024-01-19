@@ -12,7 +12,7 @@ void WindowsInput::Update() {
     prevKeyStates = keyStates;
 
     for (int key = 0; key < 256; ++key) {
-        keyStates[key] = GetAsyncKeyState(key) & 0x8000;
+        keyStates[key] = GetAsyncKeyState(key) & 0x8000; // Check if key is pressed
     }
 
     UnlockInput();  // Unlock the mutex after updating shared data

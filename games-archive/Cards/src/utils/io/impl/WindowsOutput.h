@@ -11,7 +11,7 @@ class WindowsOutput : public Output {
 public:
     // Singleton
     WindowsOutput() = default;
-    ~WindowsOutput() override = default;
+    ~WindowsOutput() override;
     WindowsOutput(const WindowsOutput&) = delete;
     WindowsOutput(WindowsOutput&&) = delete;
     WindowsOutput& operator=(const WindowsOutput&) = delete;

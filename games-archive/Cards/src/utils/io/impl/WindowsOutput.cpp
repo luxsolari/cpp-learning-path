@@ -7,9 +7,9 @@
 #include <Windows.h>
 #include <fcntl.h>
 #include <io.h>
-#include <conio.h>
 #include <thread>
 #include <chrono>
+#include <curses.h>
 #include "WindowsOutput.h"
 
 WindowsOutput* WindowsOutput::getInstance() {
@@ -29,6 +29,19 @@ WindowsOutput* WindowsOutput::getInstance() {
     //GetConsoleCursorInfo(hConsole, &cursorInfo);
     //cursorInfo.bVisible = false;
     //SetConsoleCursorInfo(hConsole, &cursorInfo);
+
+    // initialize curses
+    setlocale(LC_ALL, "");
+    initscr();
+    raw();
+    noecho();
+    keypad(stdscr, TRUE);
+    start_color();
+    curs_set(FALSE);
+
+    // initialize colors
+    init_pair(1, COLOR_HIGHLIGHTTEXT, COLOR_BLACK);
+    init_pair(2, COLOR_BLACK, COLOR_WHITE);
 
     return &instance;
 }
@@ -50,51 +63,12 @@ std::vector<int> WindowsOutput::getConsoleSize() const {
     return std::vector<int>{width, height};
 }
 
-// Draws a square border with the specified width and height. The border is drawn from startPos.
-// startPos is a vector with two elements: the x and y coordinates of the start position.
-// The border is drawn using unicode characters. The console is set to UTF-16 mode to print unicode characters.
-// The console is returned to ANSI mode after the border is drawn.
+// Draws a square border with the specified width and height using curses
 void WindowsOutput::drawSquareBorder(int width, int height, std::vector<int> startPos) const {
-    // ASCII Symbols for borders
-    const std::wstring TOP_LEFT_CORNER   = L"\u250C";
-    const std::wstring TOP_RIGHT_CORNER  = L"\u2510";
-    const std::wstring BOTTOM_LEFT_CORNER= L"\u2514";
-    const std::wstring BOTTOM_RIGHT_CORNER= L"\u2518";
-    const std::wstring HORIZONTAL_BORDER = L"\u2500";
-    const std::wstring VERTICAL_BORDER   = L"\u2502";
-
-    // Set console to UTF-16 mode to print unicode characters to console window (Windows only)
-    _setmode(_fileno(stdout), _O_U16TEXT);
-
-    // Set cursor position to start position
-    setCursorPosition(startPos.at(0), startPos.at(1));
-
-    // Draw top border
-    this->printToConsoleWide(TOP_LEFT_CORNER.c_str());
-    for (int i = 0; i < width - 2; ++i) {
-       this->printToConsoleWide(HORIZONTAL_BORDER.c_str());
-    }
-    this->printToConsoleWide(TOP_RIGHT_CORNER.c_str());
-
-    // Draw sides
-    for (int i = 0; i < height - 2; ++i) {
-        setCursorPosition(startPos.at(0), startPos.at(1) + i + 1);
-        this->printToConsoleWide(VERTICAL_BORDER.c_str());
-        setCursorPosition(startPos.at(0) + width - 1, startPos.at(1) + i + 1);
-        this->printToConsoleWide(VERTICAL_BORDER.c_str());
-    }
-
-    // Draw bottom border
-    setCursorPosition(startPos.at(0), startPos.at(1) + height - 1);
-    this->printToConsoleWide(BOTTOM_LEFT_CORNER.c_str());
-    for (int i = 0; i < width - 2; ++i) {
-        this->printToConsoleWide(HORIZONTAL_BORDER.c_str());
-    }
-    this->printToConsoleWide(BOTTOM_RIGHT_CORNER.c_str());
-    std::wcout << std::endl;
-
-    // Return console to ANSI mode
-    _setmode(_fileno(stdout), _O_TEXT);
+    WINDOW *win = newwin(height, width, startPos.at(0), startPos.at(1));
+    ::box(win, 0, 0);
+    ::refresh();
+    ::wrefresh(win);
 }
 
 
@@ -164,15 +138,9 @@ void WindowsOutput::returnCursorToStart() const {
 }
 
 void WindowsOutput::clearScreen() const {
-    // Get console window size
-    std::vector<int> consoleSize = getConsoleSize();
-    int width = consoleSize.at(0);
-    int height = consoleSize.at(1);
     // Clear screen
-    system("cls"); // Windows only command to clear screen.
-                             // This is faster than using SetConsoleCursorPosition, but it is not portable.
-    // Return cursor to start
-    returnCursorToStart();
+    ::clear();
+    ::refresh();
 }
 
 void WindowsOutput::returnCarriage() const {
@@ -192,10 +160,11 @@ std::vector<int> WindowsOutput::getCursorPosition() const {
 }
 
 void WindowsOutput::printToConsole(const char *format, ...) const {
-    // print to console window (Windows only)
+    // print to console window with curses
     va_list args;
     va_start(args, format);
-    vprintf(format, args);
+    ::printw(format, args); // Use :: to refer to the global namespace
+    ::refresh();
     va_end(args);
 }
 
@@ -211,13 +180,19 @@ void WindowsOutput::printToConsoleWide(const wchar_t *format, ...) const {
 }
 
 void WindowsOutput::printToConsoleAtLocation(int y, int x, const char *format, ...) const {
-    // Set cursor position
-    setCursorPosition(x, y);
-    // print to console window (Windows only)
+    // print to console window
     va_list args;
     va_start(args, format);
-    vprintf(format, args);
+    ::mvprintw(y, x, format, args); // Use :: to refer to the global namespace
+    ::refresh();
     va_end(args);
+}
+
+WindowsOutput::~WindowsOutput() {
+    // return console to ANSI mode
+    _setmode(_fileno(stdout), _O_TEXT);
+    // return console to normal state
+    endwin();
 }
 
 #endif //WINDOWS_PLATFORM

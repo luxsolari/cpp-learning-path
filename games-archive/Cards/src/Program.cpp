@@ -72,11 +72,13 @@ int main() {
 
 
 #ifdef WINDOWS_PLATFORM
+
 #include <Windows.h>
 #include <chrono>
 #include <vector>
 #include "utils/io/Input.h"
 #include "utils/factory/InputFactory.h"
+#include <curses.h>
 
 #pragma execution_character_set( "utf-8" )
 
@@ -114,14 +116,15 @@ void ConsoleMenu::DisplayMenu() const {
     for (size_t i = 0; i < menuOptions.size(); ++i) {
         // Set the text color to red if the option is selected
         if (i == selectedOption) {
-            SetConsoleTextAttribute(FOREGROUND_INTENSITY | FOREGROUND_RED |
-                                              BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN);  // Highlighted text color
+            // hihglight selected option with red color using ncurses
+            attron(COLOR_PAIR(1));
         }
 
-        std::cout << menuOptions[i];
+        console->printToConsoleAtLocation(static_cast<int>(i) + 1, 1, menuOptions[i].c_str());
 
         if (i == selectedOption) {
-            SetConsoleTextAttribute(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);  // Reset text color
+            // turn off highlight
+            attroff(COLOR_PAIR(1));
         }
 
         if (orientation == MenuOrientation::Vertical) {
@@ -134,8 +137,12 @@ void ConsoleMenu::DisplayMenu() const {
 }
 
 void ConsoleMenu::Run() {
+    int maxConsoleX = console->getConsoleSize().at(0);
+    int maxConsoleY = console->getConsoleSize().at(1);
+
     while (true) {
         console->clearScreen();
+        console->drawSquareBorder(maxConsoleX, maxConsoleY - 1, {0, 0});
         DisplayMenu();
         if (orientation == MenuOrientation::Vertical) {
             if (inputManager->IsKeyPressed(VK_DOWN) && selectedOption < menuOptions.size() - 1) {
@@ -176,7 +183,7 @@ int main() {
     Input* inputManager = InputFactory::createInput();
     Output* console = OutputFactory::createConsole();
 
-    std::string greeting = "UI Menu Test! \033[31m\u2660 \u2663 \u2665 \u2666";
+    std::string greeting = "UI Menu Test! \u2660 \u2663 \u2665 \u2666";
 
     int maxConsoleX = console->getConsoleSize().at(0);
     int maxConsoleY = console->getConsoleSize().at(1);
