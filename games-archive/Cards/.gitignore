@@ -615,7 +615,6 @@ FodyWeavers.xsd
 
 # vcpkg package manager
 vcpkg_installed/
-vcpkg.json
 vcpkg.lock
 
 ### VisualStudio Patch ###

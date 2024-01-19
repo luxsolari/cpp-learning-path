@@ -516,7 +516,6 @@ FodyWeavers.xsd
 
 vcpkg/
 vcpkg_installed/
-vcpkg.json
 vcpkg_manifest.json
 vcpkg_outdated.json
 vcpkg_triplet.cmake
