@@ -1,9 +1,0 @@
-{
-  "name" : "cards-sln",
-  "version-string" : "1.0.0",
-  "builtin-baseline" : "97dd26728e3856ed1ab62ee74ee3a391d9c81d19",
-  "dependencies" : [ {
-    "name" : "pdcurses",
-    "version>=" : "3.9#6"
-  } ]
-}
