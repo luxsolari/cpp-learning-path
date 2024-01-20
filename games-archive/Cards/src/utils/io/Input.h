@@ -13,8 +13,13 @@
 
 class Input {
 public:
-    Input();
+    explicit Input(bool running);
+    Input(const Input&) = delete;
+    Input(Input&&) = delete;
+    Input& operator=(const Input&) = delete;
+    Input& operator=(Input&&) = delete;
     virtual ~Input();
+
     void Start();
     void Stop();
     void InputThreadFunction();
@@ -23,18 +28,18 @@ public:
     virtual bool IsKeyPressed(int key) = 0;
     virtual bool IsKeyReleased(int key) = 0;
 protected:
-    std::unordered_map<int, bool> keyStates;
-    std::unordered_map<int, bool> prevKeyStates;
-    bool running;
-    std::thread inputThread;
-    mutable std::mutex inputMutex;
+    std::unordered_map<int, bool> m_keyStates;
+    std::unordered_map<int, bool> m_prevKeyStates;
+    bool m_isRunning;
+    std::thread m_inputThread;
+    mutable std::mutex m_inputMutex;
 
     void LockInput() const {
-        inputMutex.lock();
+        m_inputMutex.lock();
     }
 
     void UnlockInput() const {
-        inputMutex.unlock();
+        m_inputMutex.unlock();
     }
 };
 

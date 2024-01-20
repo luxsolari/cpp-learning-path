@@ -9,24 +9,28 @@
 #define CARDS_WINDOWSINPUT_H
 
 
-class WindowsInput : public Input {
-    // Singleton
+class WindowsInput final : public Input {
 public:
-    static WindowsInput *GetInstance() {
-        static WindowsInput instance;
+    // Singleton
+    explicit WindowsInput(bool running);
+    WindowsInput(WindowsInput const &) = delete;
+    WindowsInput(WindowsInput&&) = delete;
+    WindowsInput& operator=(WindowsInput const &) = delete;
+    WindowsInput& operator=(WindowsInput&&) = delete;
+    ~WindowsInput() final;
+
+    static WindowsInput *GetInstance(bool running) {
+        static WindowsInput instance(running);
         return &instance;
     }
-
-    void operator=(WindowsInput const &) = delete;
 
     void Update() override;
 
     bool IsKeyDown(int key) override;
 
     bool IsKeyPressed(int key) override;
-
     bool IsKeyReleased(int key) override;
-
+private:
 };
 
 

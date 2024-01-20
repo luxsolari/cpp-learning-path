@@ -4,7 +4,6 @@
 #ifdef UNIX_PLATFORM
 #include "UnixInput.h"
 
-#endif //UNIX_PLATFORM
 
 void UnixInput::Update() {
 
@@ -21,3 +20,5 @@ bool UnixInput::IsKeyPressed(int key) {
 bool UnixInput::IsKeyReleased(int key) {
     return false;
 }
+
+#endif //UNIX_PLATFORM

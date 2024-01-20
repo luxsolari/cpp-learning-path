@@ -8,7 +8,7 @@
 
 Input *InputFactory::createInput() {
 #ifdef WINDOWS_PLATFORM
-    return WindowsInput::GetInstance();
+    return WindowsInput::GetInstance(true);
 #else
     return UnixInput::getInstance();
 #endif

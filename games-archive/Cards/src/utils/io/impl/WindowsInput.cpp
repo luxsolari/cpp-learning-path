@@ -9,10 +9,10 @@
 void WindowsInput::Update() {
     LockInput();  // Lock the mutex before accessing shared data
 
-    prevKeyStates = keyStates;
+    m_prevKeyStates = m_keyStates;
 
     for (int key = 0; key < 256; ++key) {
-        keyStates[key] = GetAsyncKeyState(key) & 0x8000; // Check if key is pressed
+        m_keyStates[key] = GetAsyncKeyState(key) & 0x8000; // Check if key is pressed
     }
 
     UnlockInput();  // Unlock the mutex after updating shared data
@@ -20,22 +20,33 @@ void WindowsInput::Update() {
 
 bool WindowsInput::IsKeyDown(int key) {
     LockInput();
-    bool result = keyStates.find(key) != keyStates.end() && keyStates.at(key);
+    bool result = m_keyStates.find(key) != m_keyStates.end() && m_keyStates.at(key);
     UnlockInput();
     return result;
 }
 
 bool WindowsInput::IsKeyPressed(int key) {
     LockInput();
-    bool result = keyStates.find(key) != keyStates.end() && !prevKeyStates[key] && keyStates[key];
+    bool result = m_keyStates.find(key) != m_keyStates.end() && !m_prevKeyStates[key] && m_keyStates[key];
     UnlockInput();
     return result;
 }
 
 bool WindowsInput::IsKeyReleased(int key) {
     LockInput();
-    bool result = keyStates.find(key) != keyStates.end() && prevKeyStates[key] && !keyStates[key];
+    bool result = m_keyStates.find(key) != m_keyStates.end() && m_prevKeyStates[key] && !m_keyStates[key];
     UnlockInput();
     return result;
 }
+
+WindowsInput::WindowsInput(bool running) : Input(running) {}
+
+WindowsInput::~WindowsInput() {
+    // This destructor is called when the program exits. It will be called before the parent class destructor.
+    std::cout << "WindowsInput destructor called" << std::endl;
+    m_isRunning = false;
+    m_keyStates.clear();
+    m_prevKeyStates.clear();
+}
+
 #endif //WINDOWS_PLATFORM
