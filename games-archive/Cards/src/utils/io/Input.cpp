@@ -10,7 +10,7 @@ Input::Input(bool running) : m_isRunning(running)
 
 Input::~Input()
 {
-
+    this->Stop();
 }
 
 void Input::Start() {

@@ -6,9 +6,36 @@
 #include <iostream>
 #include "UnixOutput.h"
 
-UnixOutput *UnixOutput::getInstance() {
-    static UnixOutput instance;
-    return &instance;
+UnixOutput::UnixOutput(bool running) : Output(running) {
+
+}
+
+UnixOutput::~UnixOutput() {
+
+}
+
+void UnixOutput::Setup() {
+
+}
+
+void UnixOutput::Update() {
+
+}
+
+void UnixOutput::BeginDraw() {
+
+}
+
+void UnixOutput::Draw() {
+
+}
+
+void UnixOutput::EndDraw() {
+
+}
+
+void UnixOutput::Cleanup() {
+
 }
 
 #endif //UNIX_PLATFORM

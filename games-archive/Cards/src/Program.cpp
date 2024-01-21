@@ -9,6 +9,8 @@ int main ()
     Input*   input = InputFactory::createInput();
     Output* output = OutputFactory::createOutput();
 
+    input->Start();
+
     while (running) {
         if (input->IsKeyPressed('Q')) {
             running = false;

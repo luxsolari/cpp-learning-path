@@ -7,40 +7,55 @@
 
 void UnixInput::Update() {
     LockInput();  // Lock the mutex before accessing shared data
-    static int counter = 0;
-    printw("Listening for input... %d\n", counter ++ );
+    static int cycles = 0;
+    mvprintw(0, 0, "Listening for input... %d\n", cycles++);
     m_prevKeyStates = m_keyStates;
 
-    for (int key = 0; key < 512; ++key) {
-        int ch = wgetch(stdscr);
-        if (ch != ERR) {
-            // Verify if the key is in the map
-            if (m_keyStates.find(ch) != m_keyStates.end()) {
-                m_keyStates[ch] = true;
+    int ch {};
+    while ((ch = wgetch(stdscr)) != ERR) {
+        // Verify if the key is in the map
+        if (m_keyStates.find(ch) == m_keyStates.end()) {
+            m_keyStates.insert(ch);
+        }
+    }
+
+    // Remove keys that are no longer pressed after 10 cycles.
+    // This is to prevent keys from being stuck in the map forever.
+    if (cycles % 10 == 0) {
+        for (auto it = m_keyStates.begin(); it != m_keyStates.end();) {
+            if (m_prevKeyStates.find(*it) == m_prevKeyStates.end()) {
+                it = m_keyStates.erase(it);
+            } else {
+                ++it;
             }
         }
     }
+
 
     UnlockInput();  // Unlock the mutex after updating shared data
 }
 
 bool UnixInput::IsKeyDown(int key) {
     LockInput();
-    bool result = m_keyStates.find(key) != m_keyStates.end() && m_keyStates.at(key);
+    bool result = m_keyStates.find(key) != m_keyStates.end();
     UnlockInput();
     return result;
 }
 
 bool UnixInput::IsKeyPressed(int key) {
     LockInput();
-    bool result = m_keyStates.find(key) != m_keyStates.end() && !m_prevKeyStates[key] && m_keyStates[key];
-    UnlockInput();
-    return result;
+    if (m_keyStates.find(key) == m_keyStates.end()) {
+        UnlockInput();
+        return false;
+    } else {
+        UnlockInput();
+        return true;
+    }
 }
 
 bool UnixInput::IsKeyReleased(int key) {
     LockInput();
-    bool result = m_keyStates.find(key) != m_keyStates.end() && m_prevKeyStates[key] && !m_keyStates[key];
+    bool result = m_prevKeyStates.find(key) != m_prevKeyStates.end() && m_keyStates.find(key) == m_keyStates.end();
     UnlockInput();
     return result;
 }
@@ -61,16 +76,6 @@ UnixInput::~UnixInput() {
     m_keyStates.clear();
     m_prevKeyStates.clear();
     endwin();
-}
-
-std::vector<int> UnixInput::GetPressedKeys() {
-    std::vector<int> pressedKeys;
-    for (int key = 0; key < 512; ++key) {
-        if (this->m_prevKeyStates[key]) {
-            pressedKeys.push_back(key);
-        }
-    }
-    return pressedKeys;
 }
 
 #endif //UNIX_PLATFORM
