@@ -47,6 +47,14 @@ set(SOURCE_FILES src/Program.cpp
         src/utils/factory/InputFactory.h
         src/utils/io/impl/UnixInput.cpp
         src/utils/io/impl/UnixInput.h
+        src/utils/core/GameInstance.cpp
+        src/utils/core/GameInstance.h
+        src/utils/io/Audio.cpp
+        src/utils/io/Audio.h
+        src/utils/factory/AudioFactory.cpp
+        src/utils/factory/AudioFactory.h
+        src/utils/core/StateManager.cpp
+        src/utils/core/StateManager.h
 )
 
 # Define your target

@@ -25,12 +25,10 @@ public:
     }
 
     void Update() override;
-
     bool IsKeyDown(int key) override;
-
     bool IsKeyPressed(int key) override;
     bool IsKeyReleased(int key) override;
-private:
+
 };
 
 

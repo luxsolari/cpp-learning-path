@@ -5,6 +5,7 @@
 #ifndef CARDS_INPUT_H
 #define CARDS_INPUT_H
 #include <iostream>
+#include <unordered_set>
 #include <unordered_map>
 #include <thread>
 #include <chrono>
@@ -28,8 +29,8 @@ public:
     virtual bool IsKeyPressed(int key) = 0;
     virtual bool IsKeyReleased(int key) = 0;
 protected:
-    std::unordered_map<int, bool> m_keyStates;
-    std::unordered_map<int, bool> m_prevKeyStates;
+    std::unordered_set<int> m_keyStates = {};
+    std::unordered_set<int> m_prevKeyStates = {};
     bool m_isRunning;
     std::thread m_inputThread;
     mutable std::mutex m_inputMutex;

@@ -7,13 +7,17 @@
 
 void UnixInput::Update() {
     LockInput();  // Lock the mutex before accessing shared data
-
+    static int counter = 0;
+    printw("Listening for input... %d\n", counter ++ );
     m_prevKeyStates = m_keyStates;
 
-    for (int key = 0; key < 256; ++key) {
-        int ch = has_key(key);
+    for (int key = 0; key < 512; ++key) {
+        int ch = wgetch(stdscr);
         if (ch != ERR) {
-            m_keyStates[key] = ch & 0x8000; // Check if key is pressed
+            // Verify if the key is in the map
+            if (m_keyStates.find(ch) != m_keyStates.end()) {
+                m_keyStates[ch] = true;
+            }
         }
     }
 
@@ -57,6 +61,16 @@ UnixInput::~UnixInput() {
     m_keyStates.clear();
     m_prevKeyStates.clear();
     endwin();
+}
+
+std::vector<int> UnixInput::GetPressedKeys() {
+    std::vector<int> pressedKeys;
+    for (int key = 0; key < 512; ++key) {
+        if (this->m_prevKeyStates[key]) {
+            pressedKeys.push_back(key);
+        }
+    }
+    return pressedKeys;
 }
 
 #endif //UNIX_PLATFORM

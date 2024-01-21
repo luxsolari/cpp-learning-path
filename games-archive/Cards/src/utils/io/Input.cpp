@@ -5,12 +5,12 @@
 
 Input::Input(bool running) : m_isRunning(running)
 {
-    Start(); // Start the input thread
+
 }
 
-Input::~Input() {
-    std::cout << "Input destructor called" << std::endl;
-    Stop();  // Ensure the input thread is stopped before exiting
+Input::~Input()
+{
+
 }
 
 void Input::Start() {
@@ -26,13 +26,11 @@ void Input::Stop() {
 
 void Input::InputThreadFunction() {
     // reset key states
-    for (int key = 0; key < 256; ++key) {
-        m_keyStates[key] = false;
-        m_prevKeyStates[key] = false;
-    }
+    m_keyStates.clear();
+    m_prevKeyStates.clear();
 
     while (m_isRunning) {
         Update();
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));  // Adjust as needed
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));  // Adjust as needed
     }
 }

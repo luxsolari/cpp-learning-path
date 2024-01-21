@@ -526,3 +526,4 @@ vcpkg-configuration.json
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,visualstudio,visualstudiocode,c
 /games-archive/Cards/build
+/games-archive/SFML-game-cpp-template/.idea

@@ -20,7 +20,7 @@ public:
     ~OutputFactory() = delete;
 
     // Strategy method to create a console object based on the platform the program is running
-    static Output* createConsole();
+    static Output* createOutput();
 
 };
 

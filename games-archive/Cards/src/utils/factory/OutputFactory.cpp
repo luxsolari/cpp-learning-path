@@ -6,10 +6,10 @@
 #include "../io/impl/WindowsOutput.h"
 #include "../io/impl/UnixOutput.h"
 
-Output* OutputFactory::createConsole() {
+Output* OutputFactory::createOutput() {
 #ifdef WINDOWS_PLATFORM
-    return WindowsOutput::getInstance();
+    return WindowsOutput::getInstance(true);
 #else
-    return UnixOutput::getInstance();
+    return UnixOutput::getInstance(true);
 #endif
 }
