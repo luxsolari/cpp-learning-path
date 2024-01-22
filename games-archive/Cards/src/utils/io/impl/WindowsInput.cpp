@@ -9,8 +9,8 @@
 void WindowsInput::Update() {
     LockInput();  // Lock the mutex before accessing shared data
     static int cycles = 0;
-    mvprintw(0, 0, "Listening for input... %d\n", cycles++);
     m_prevKeyStates = m_keyStates;
+    cycles++;
 
     int ch {};
     while ((ch = wgetch(stdscr)) != ERR) {
@@ -30,6 +30,7 @@ void WindowsInput::Update() {
                 ++it;
             }
         }
+        cycles = 0;
     }
 
 
@@ -72,7 +73,6 @@ WindowsInput::~WindowsInput() {
     m_isRunning = false;
     m_keyStates.clear();
     m_prevKeyStates.clear();
-    endwin();
 }
 
 

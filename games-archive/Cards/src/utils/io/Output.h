@@ -19,7 +19,7 @@ public:
     virtual void Setup() = 0; // Setup the console previously to start using it (e.g. set the console size).
     void Start(); // Start the output thread. This will set the input thread object to run.
     void Stop();  // Stop the output thread. This will stop the input thread object from running.
-    virtual void Cleanup() = 0; // Cleanup resources used before tearing down the thread.
+    virtual void Cleanup() = 0; // Cleanup resources used after the output thread has stopped.
 
     void OutputThreadFunction();
 
@@ -31,7 +31,12 @@ public:
 protected:
     bool m_isRunning;
     std::thread m_outputThread;
+    std::thread m_resizeThread;
     mutable std::mutex m_outputMutex;
+
+    // console dimensions
+    int m_width;
+    int m_height;
 
     void LockOutput() const {
         m_outputMutex.lock();
@@ -40,7 +45,6 @@ protected:
     void UnlockOutput() const {
         m_outputMutex.unlock();
     }
-
 };
 
 #endif //CARDS_CONSOLE_H

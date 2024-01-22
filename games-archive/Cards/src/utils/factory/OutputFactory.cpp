@@ -8,8 +8,8 @@
 
 Output* OutputFactory::createOutput() {
 #ifdef WINDOWS_PLATFORM
-    return WindowsOutput::getInstance(true);
+    return WindowsOutput::getInstance(false);
 #else
-    return UnixOutput::getInstance(true);
+    return UnixOutput::getInstance(false);
 #endif
 }

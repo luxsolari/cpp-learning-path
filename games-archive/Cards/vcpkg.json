@@ -5,10 +5,13 @@
   "dependencies" : [ {
     "name" : "pdcurses",
     "version>=" : "3.9#6",
-    "platform": "windows"
+    "platform" : "windows"
   }, {
     "name" : "ncurses",
     "version>=" : "6.4#1",
-    "platform": "linux, osx"
+    "platform" : "linux, osx"
+  }, {
+    "name" : "sfml",
+    "version>=" : "2.6.1"
   } ]
 }

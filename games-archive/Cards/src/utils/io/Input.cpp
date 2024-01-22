@@ -31,6 +31,6 @@ void Input::InputThreadFunction() {
 
     while (m_isRunning) {
         Update();
-        std::this_thread::sleep_for(std::chrono::milliseconds(16));  // Adjust as needed
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));  // Adjust as needed
     }
 }

@@ -92,7 +92,10 @@ if(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     endif()
 
     find_package(unofficial-pdcurses CONFIG REQUIRED)
-    target_link_libraries(Cards PRIVATE unofficial::pdcurses::pdcurses)
+    target_link_libraries(Cards PRIVATE unofficial::pdcurses::pdcurses )
+
+    find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
+    target_link_libraries(Cards PRIVATE sfml-system sfml-network sfml-graphics sfml-window)
 
 # Windows on MinGW
 elseif(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
@@ -113,7 +116,8 @@ elseif(CMAKE_HOST_WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     endif()
 
     find_package(unofficial-pdcurses CONFIG REQUIRED)
-    target_link_libraries(Cards PRIVATE unofficial::pdcurses::pdcurses)
+    find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
+    target_link_libraries(Cards PRIVATE unofficial::pdcurses::pdcurses sfml-system sfml-network sfml-graphics sfml-window sfml-main)
 
 # Linux on GCC or Clang
 elseif (CMAKE_HOST_LINUX)
@@ -128,7 +132,8 @@ elseif (CMAKE_HOST_LINUX)
     # Pass a preprocessor macro to the compiler
     target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1 PDC_WIDE=1)
     find_package(Curses REQUIRED)
-    target_link_libraries(Cards PRIVATE -lncursesw)
+    find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
+    target_link_libraries(Cards PRIVATE -lncursesw -lpthread -lmenu -lpanel sfml-system sfml-network sfml-graphics sfml-window sfml-main)
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
 
     # Pass debug macro to the compiler if in debug mode, otherwise pass release macro
@@ -153,10 +158,11 @@ elseif (CMAKE_HOST_APPLE)
 
 
     find_package(Curses REQUIRED)
+    find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
     target_link_libraries(Cards PRIVATE ${CURSES_LIBRARIES})
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
     # pass compiler flags for ncurses
-    target_compile_options(Cards PRIVATE -lncurses)
+    target_compile_options(Cards PRIVATE -lncurses -lpthread -lmenu -lpanel sfml-system sfml-network sfml-graphics sfml-window sfml-main)
 
     # Pass debug macro to the compiler if in debug mode, otherwise pass release macro
     if(CMAKE_BUILD_TYPE MATCHES "Debug")
@@ -179,7 +185,8 @@ elseif (CMAKE_HOST_UNIX)
     target_compile_definitions(Cards PRIVATE UNIX_PLATFORM=1 )
 
     find_package(Curses REQUIRED)
-    target_link_libraries(Cards PRIVATE -lncursesw)
+    find_package(SFML COMPONENTS system window graphics CONFIG REQUIRED)
+    target_link_libraries(Cards PRIVATE -lncursesw -lpthread -lmenu -lpanel sfml-system sfml-network sfml-graphics sfml-window)
     target_include_directories(Cards PRIVATE ${CURSES_INCLUDE_DIRS})
 
     # Pass debug macro to the compiler if in debug mode, otherwise pass release macro

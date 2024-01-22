@@ -10,14 +10,17 @@ int main ()
     Output* output = OutputFactory::createOutput();
 
     input->Start();
+    output->Start();
 
     while (running) {
-        if (input->IsKeyPressed('Q')) {
+        if (input->IsKeyPressed('Q') || input->IsKeyPressed('q')) {
             running = false;
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
+    input->Stop();
+    output->Stop();
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     return 0;
 }
